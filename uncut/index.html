@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111111">
+<title>أن كات</title>
+<meta name="apple-mobile-web-app-title" content="أن كات">
+<meta name="application-name" content="أن كات">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEg0lEQVR4nO3czW3jMBRFYWeQBtyAVy7C/a9cRFapZBYCHgLLN9EfyfuezodZTAYZW6KOSDoI9HG9Xi/AO/9GHwB8EQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oD0OfoAxnjeb6u+//H13ehInDFzQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQOoRx9rH6MBEp5njeb9Nf/q8XW3dhrH5M8FeziS+POdTtvbof2sNe2AclSz0tonn/dZh3MY/TZBK3nJYgtvGseoMqeTi0UQYP3PMnbOStVl0WFkc4whnqMRqqnjRMI4DT7teJc5NBOuZYy57Jcc20XplSRZHmEY5SyIp5om5VnH0GQ7ziSRpEyHrzPHCqpKeTTRdWYrEEQZWkn2emGsSh8MwdavE4WQbqTZzzDWqxKeJditLkzjiWH1G8HJcJVYn1dTH9Xrt8DbZB/Tx9W14Cq1XzE5xBMMhTqfbXrt3HIFK1ur/+WtYHIFKfjfwJzfj4whU8pPDT/OM4ggnr8Qhi4ljHOFUlfg0EazjCIUrMWwi5IgjlKnEuYmQLI5J3kRSNBFSxhGyVJKriZA7juBZSdImQpE4gkMl2ZsI1eII/Ssp00QoG0doXUm9JkL9OCYtEimcxaT+b4K1UD6LySke+3T4tOGw7e2gfhyNLuQZ+igeR9NLWL6P4nFgj8pxdLiza08eZePodtkK91Ezjs4XrGofNePAIQrGMeQ+Ljl5VItjz0V6fH3v+dFnvT5KxbGzjJe/oFQcm70EsbmPYpNHnThMLozJYRyiSByHLCh//mOHg7FSJI7NfomAzUeFODbfqX9e/pNvPtLHYXsZbA9sudxxHL7V2PxtJeWOY7NVl/y0i0viONptNQ6Uuo+scXQe9HN+sk0ZR4etxoH/Ma+UcWy28wKfbfORL44UW425jH0ki2P4EJ9qcckUx5CtxoEvNbzstTLFsZnP7Z6rjzRxWA3rST7Z5ojDZEHp8LJWEsRhWMbOF88yeSSIYzPnmztFH+5xmA9i7c2HdRy2C8qQN+rPN44UZexkPnn4xrFZ/zKqLi6mcTgP2VtZ5qpVHONIuqDU+2RrF0fSMnby7MMujs0cyii2+fCKw3CA1nJo9ChecdT4Hb4ymw+vOC6bHpJhVcYebifi++zzhbeR24CGVdOA51nYzRzBc7yWW378tmfqG8dlwRJjO6zLOZ+C77Ly09sp2nlYwy+Li//xW88cYT6O/iM7UceZ4vhzxHHZ/ai/gfKWnSaOyTSsWQZ3LlfiOfYcBTzvt0RZTIgDUrJlBT0RByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCD9Bx1ocSx2zF9GAAAAAElFTkSuQmCC">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEg0lEQVR4nO3czW3jMBRFYWeQBtyAVy7C/a9cRFapZBYCHgLLN9EfyfuezodZTAYZW6KOSDoI9HG9Xi/AO/9GHwB8EQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oD0OfoAxnjeb6u+//H13ehInDFzQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQCIOSMQBiTggEQck4oBEHJCIAxJxQOoRx9rH6MBEp5njeb9Nf/q8XW3dhrH5M8FeziS+POdTtvbof2sNe2AclSz0tonn/dZh3MY/TZBK3nJYgtvGseoMqeTi0UQYP3PMnbOStVl0WFkc4whnqMRqqnjRMI4DT7teJc5NBOuZYy57Jcc20XplSRZHmEY5SyIp5om5VnH0GQ7ziSRpEyHrzPHCqpKeTTRdWYrEEQZWkn2emGsSh8MwdavE4WQbqTZzzDWqxKeJditLkzjiWH1G8HJcJVYn1dTH9Xrt8DbZB/Tx9W14Cq1XzE5xBMMhTqfbXrt3HIFK1ur/+WtYHIFKfjfwJzfj4whU8pPDT/OM4ggnr8Qhi4ljHOFUlfg0EazjCIUrMWwi5IgjlKnEuYmQLI5J3kRSNBFSxhGyVJKriZA7juBZSdImQpE4gkMl2ZsI1eII/Ssp00QoG0doXUm9JkL9OCYtEimcxaT+b4K1UD6LySke+3T4tOGw7e2gfhyNLuQZ+igeR9NLWL6P4nFgj8pxdLiza08eZePodtkK91Ezjs4XrGofNePAIQrGMeQ+Ljl5VItjz0V6fH3v+dFnvT5KxbGzjJe/oFQcm70EsbmPYpNHnThMLozJYRyiSByHLCh//mOHg7FSJI7NfomAzUeFODbfqX9e/pNvPtLHYXsZbA9sudxxHL7V2PxtJeWOY7NVl/y0i0viONptNQ6Uuo+scXQe9HN+sk0ZR4etxoH/Ma+UcWy28wKfbfORL44UW425jH0ki2P4EJ9qcckUx5CtxoEvNbzstTLFsZnP7Z6rjzRxWA3rST7Z5ojDZEHp8LJWEsRhWMbOF88yeSSIYzPnmztFH+5xmA9i7c2HdRy2C8qQN+rPN44UZexkPnn4xrFZ/zKqLi6mcTgP2VtZ5qpVHONIuqDU+2RrF0fSMnby7MMujs0cyii2+fCKw3CA1nJo9ChecdT4Hb4ymw+vOC6bHpJhVcYebifi++zzhbeR24CGVdOA51nYzRzBc7yWW378tmfqG8dlwRJjO6zLOZ+C77Ly09sp2nlYwy+Li//xW88cYT6O/iM7UceZ4vhzxHHZ/ai/gfKWnSaOyTSsWQZ3LlfiOfYcBTzvt0RZTIgDUrJlBT0RByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCARByTigEQckIgDEnFAIg5IxAGJOCD9Bx1ocSx2zF9GAAAAAElFTkSuQmCC">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;background:#e9e2d6;color:#1a1a1a;padding-bottom:90px}
+.ar{font-family:"Aref Ruqaa","Noto Naskh Arabic",serif;font-weight:700}
+.en{font-family:"Helvetica Neue",Arial,sans-serif;font-weight:900;letter-spacing:-2px}
+header{background:#111;color:#fff;padding:22px 16px 14px;text-align:center}
+header .ar{font-size:46px;line-height:1.1;margin:0}
+header .en{font-size:44px;line-height:1;margin:6px 0 0}
+header .sub{margin:10px 0 0;font-size:17px;font-weight:800}
+header .tg{margin:4px 0 0;opacity:.85;font-size:14px}
+#tbl{display:inline-block;margin-top:8px;background:#fff3;border-radius:20px;padding:3px 12px;font-size:13px}
+nav{position:sticky;top:0;z-index:5;background:#fff;display:flex;gap:8px;overflow-x:auto;padding:10px;box-shadow:0 1px 6px #0001}
+nav button{flex:none;border:0;background:#e9e2d6;color:#1a1a1a;padding:8px 16px;border-radius:20px;font:inherit;font-size:15px}
+nav button.on{background:#111;color:#fff}
+main{padding:12px;max-width:640px;margin:auto}
+.item{background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 4px #0001}
+.item .i{flex:1}.item b{display:block;font-size:16px}.item small{color:#6b7280;display:block;line-height:1.5}
+.price{color:#c62f2f;font-weight:800;margin-top:4px}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:34px;height:34px;border:0;border-radius:50%;background:#111;color:#fff;font-size:20px;line-height:1}
+.qty button.m{background:#e5e7eb;color:#374151}
+.qty span{min-width:18px;text-align:center;font-weight:700}
+#bar{position:fixed;bottom:0;left:0;right:0;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#fff;box-shadow:0 -2px 10px #0002;display:none}
+#bar button{width:100%;border:0;background:#111;color:#fff;font:inherit;font-size:17px;font-weight:700;padding:14px;border-radius:12px}
+#sheet{position:fixed;inset:0;background:#0007;display:none;align-items:flex-end;z-index:10}
+#sheet .box{background:#fff;width:100%;max-height:85vh;overflow:auto;border-radius:18px 18px 0 0;padding:16px;max-width:640px;margin:auto}
+#sheet h2{margin:0 0 10px}
+.row{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid #eee}
+input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #d1d5db;border-radius:10px;margin-top:8px}
+.tot{font-weight:700;font-size:18px;margin:10px 0}
+.go{width:100%;border:0;background:#c62f2f;color:#fff;font:inherit;font-size:17px;font-weight:700;padding:14px;border-radius:12px;margin-top:10px}
+.x{width:100%;border:0;background:#f3f4f6;font:inherit;padding:12px;border-radius:12px;margin-top:8px}
+footer{text-align:center;color:#8a8478;font-size:12px;padding:16px}
+#splash{position:fixed;inset:0;z-index:100;background:#111;color:#fff;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;transition:opacity .8s ease;opacity:1}
+#splash .ar{font-size:72px;line-height:1.1;margin:0}
+#splash .en{font-size:64px;line-height:1;margin:8px 0 0}
+#splash p{margin:14px 0 0;font-size:22px;font-weight:800}
+#splash.out{opacity:0}
+</style>
+</head>
+<body>
+<script>
+/* ===== Restaurant settings: edit here only ===== */
+var MENU=[
+{
+"name": "الكريب",
+"items": [
+{
+"n": "سوبر كرانشي",
+"d": "",
+"p": 120
+},
+{
+"n": "زنجر سوبريم",
+"d": "",
+"p": 125
+},
+{
+"n": "كرانشي سويت تشيلي",
+"d": "",
+"p": 140
+},
+{
+"n": "تشيكن & تشيز",
+"d": "",
+"p": 150
+},
+{
+"n": "سموك أن كات",
+"d": "",
+"p": 130
+},
+{
+"n": "جوليان",
+"d": "",
+"p": 110
+},
+{
+"n": "فاهيتا فراخ",
+"d": "",
+"p": 135
+},
+{
+"n": "فاهيتا لحم",
+"d": "",
+"p": 150
+},
+{
+"n": "ميكس فراخ",
+"d": "",
+"p": 130
+},
+{
+"n": "ميكس لحوم",
+"d": "",
+"p": 140
+},
+{
+"n": "كوردن بلو",
+"d": "",
+"p": 120
+},
+{
+"n": "اوريجنال كريسبي",
+"d": "",
+"p": 135
+},
+{
+"n": "شيش طاووق",
+"d": "",
+"p": 135
+},
+{
+"n": "مشوي صدور",
+"d": "",
+"p": 130
+},
+{
+"n": "تيكساس برجر",
+"d": "",
+"p": 140
+},
+{
+"n": "ميكس جبن",
+"d": "",
+"p": 75
+},
+{
+"n": "بطاطس",
+"d": "",
+"p": 60
+},
+{
+"n": "تشيكن فرايز",
+"d": "",
+"p": 85
+},
+{
+"n": "شيش فرايز",
+"d": "",
+"p": 90
+},
+{
+"n": "هوت دوج",
+"d": "",
+"p": 85
+},
+{
+"n": "هوت دوج بطاطس",
+"d": "",
+"p": 75
+}
+]
+},
+{
+"name": "الوجبات",
+"items": [
+{
+"n": "فاهيتا لحم",
+"d": "يقدم مع: أرز، بطاطس، صوص، سلطة",
+"p": 200
+},
+{
+"n": "ميكس جريل",
+"d": "يقدم مع: أرز، بطاطس، صوص، سلطة",
+"p": 220
+},
+{
+"n": "انتركوت مشوي",
+"d": "يقدم مع: أرز، بطاطس، صوص، سلطة",
+"p": 250
+},
+{
+"n": "فيليه دجاج مشوي",
+"d": "يقدم مع: أرز، بطاطس، صوص، سلطة",
+"p": 185
+},
+{
+"n": "شيش طاووق",
+"d": "يقدم مع: أرز، بطاطس، صوص، سلطة",
+"p": 160
+},
+{
+"n": "كفتة",
+"d": "يقدم مع: أرز، بطاطس، صوص، سلطة",
+"p": 170
+},
+{
+"n": "فاهيتا دجاج",
+"d": "يقدم مع: أرز، بطاطس، صوص، سلطة",
+"p": 165
+}
+]
+},
+{
+"name": "المقبلات",
+"items": [
+{
+"n": "صوص",
+"d": "",
+"p": 20
+},
+{
+"n": "حلقات بصل (٥ قطع)",
+"d": "",
+"p": 45
+},
+{
+"n": "موتزريلا ستيكس (٤ قطع)",
+"d": "",
+"p": 55
+},
+{
+"n": "كول سلو",
+"d": "",
+"p": 35
+},
+{
+"n": "كونو",
+"d": "",
+"p": 30
+},
+{
+"n": "مدخنات",
+"d": "",
+"p": 10
+},
+{
+"n": "فرايز",
+"d": "",
+"p": 30
+},
+{
+"n": "تشيز فرايز",
+"d": "",
+"p": 50
+},
+{
+"n": "هالبينو تشيز فرايز",
+"d": "",
+"p": 55
+},
+{
+"n": "تشيكن تشيز فرايز",
+"d": "",
+"p": 75
+},
+{
+"n": "بيكون تشيز فرايز",
+"d": "",
+"p": 80
+},
+{
+"n": "تكساس فرايز",
+"d": "",
+"p": 75
+},
+{
+"n": "اضافة بطاطس",
+"d": "",
+"p": 15
+},
+{
+"n": "اضافة حشو",
+"d": "",
+"p": 25
+}
+]
+},
+{
+"name": "برجر بيف",
+"items": [
+{
+"n": "بافلو برجر - سنجل",
+"d": "قطعة بيف مشوية، صوص برجر، قطع بصل أبيض، صوص البافلو المميز، طماطم، خس، خيار",
+"p": 105
+},
+{
+"n": "بافلو برجر - دوبل",
+"d": "قطعة بيف مشوية، صوص برجر، قطع بصل أبيض، صوص البافلو المميز، طماطم، خس، خيار",
+"p": 130
+},
+{
+"n": "سموكد برجر - سنجل",
+"d": "قطعة بيف، بيف بيكون، صوص برجر باربكيو، بصل مكرمل، طماطم، خيار، خس، صوص شيدر",
+"p": 115
+},
+{
+"n": "سموكد برجر - دوبل",
+"d": "قطعة بيف، بيف بيكون، صوص برجر باربكيو، بصل مكرمل، طماطم، خيار، خس، صوص شيدر",
+"p": 145
+},
+{
+"n": "تشيز برجر - سنجل",
+"d": "قطعة بيف، قطعة شيدر، صوص برجر، خس، طماطم، خيار، صوص شيدر",
+"p": 110
+},
+{
+"n": "تشيز برجر - دوبل",
+"d": "قطعة بيف، قطعة شيدر، صوص برجر، خس، طماطم، خيار، صوص شيدر",
+"p": 140
+},
+{
+"n": "مشروم برجر - سنجل",
+"d": "قطعة بيف، صوص برجر، صوص مشروم، صوص مدخن، طماطم، خس، خيار",
+"p": 115
+},
+{
+"n": "مشروم برجر - دوبل",
+"d": "قطعة بيف، صوص برجر، صوص مشروم، صوص مدخن، طماطم، خس، خيار",
+"p": 145
+},
+{
+"n": "أن كات برجر - سنجل",
+"d": "قطعة بيف مشوية، صوص برجر، قطع لحم مشوي، شيدر، طماطم، خس، خيار",
+"p": 135
+},
+{
+"n": "أن كات برجر - دوبل",
+"d": "قطعة بيف مشوية، صوص برجر، قطع لحم مشوي، شيدر، طماطم، خس، خيار",
+"p": 165
+}
+]
+},
+{
+"name": "برجر تشيكن",
+"items": [
+{
+"n": "سموكد تشيكن - سنجل",
+"d": "قطعة كرسبي، بيف بيكون، صوص برجر، مايونيز، خس، خيار، باربكيو، صوص شيدر",
+"p": 115
+},
+{
+"n": "سموكد تشيكن - دوبل",
+"d": "قطعة كرسبي، بيف بيكون، صوص برجر، مايونيز، خس، خيار، باربكيو، صوص شيدر",
+"p": 150
+},
+{
+"n": "كرسبي راك - سنجل",
+"d": "قطعة كرسبي، طبقة موتزريلا، تركي مدخن، رانش، مايونيز، خس، خيار، صوص شيدر",
+"p": 110
+},
+{
+"n": "كرسبي راك - دوبل",
+"d": "قطعة كرسبي، طبقة موتزريلا، تركي مدخن، رانش، مايونيز، خس، خيار، صوص شيدر",
+"p": 145
+},
+{
+"n": "فاير تشيكن",
+"d": "٣ قطع ستريبس، هالبينو، مايونيز، صوص فاير، صوص شيدر، خس، خيار",
+"p": 125
+},
+{
+"n": "تشيكن كوكيز",
+"d": "٣ قطع ستريبس، ٢ موتزريلا ستيكس، مايونيز، سويت شيلي، رانش، صوص شيدر، خس، خيار",
+"p": 135
+},
+{
+"n": "جراند أن كات",
+"d": "٢ قطعة دجاج مقلي، حلقات بصل، شيدر شرايح، مايونيز، صوص برجر، صوص شيدر، خس، خيار",
+"p": 150
+}
+]
+},
+{
+"name": "ساندويتش باجيت",
+"items": [
+{
+"n": "كرانشي سويت تشيلي",
+"d": "",
+"p": 145
+},
+{
+"n": "اوريجنال كريسبي",
+"d": "",
+"p": 130
+},
+{
+"n": "زنجر سوبريم",
+"d": "",
+"p": 120
+},
+{
+"n": "كوردن بلو",
+"d": "",
+"p": 120
+},
+{
+"n": "شيش طاووق",
+"d": "",
+"p": 120
+},
+{
+"n": "فاهيتا تشيكن",
+"d": "",
+"p": 120
+},
+{
+"n": "فاهيتا لحم",
+"d": "",
+"p": 120
+},
+{
+"n": "كفتة",
+"d": "",
+"p": 80
+}
+]
+},
+{
+"name": "ساندويتش رول",
+"items": [
+{
+"n": "كرانشي",
+"d": "",
+"p": 90
+},
+{
+"n": "زنجر",
+"d": "",
+"p": 95
+},
+{
+"n": "شيش طاووق",
+"d": "",
+"p": 105
+},
+{
+"n": "تشيكن فرايز",
+"d": "",
+"p": 70
+},
+{
+"n": "شيش فرايز",
+"d": "",
+"p": 75
+},
+{
+"n": "فرايز",
+"d": "",
+"p": 45
+},
+{
+"n": "هوت دوج",
+"d": "",
+"p": 70
+},
+{
+"n": "هوت دوج فرايز",
+"d": "",
+"p": 60
+}
+]
+},
+{
+"name": "تشيكن تندرز",
+"items": [
+{
+"n": "بوكس كبير",
+"d": "١٠ قطع ستريبس، بطاطس، ٢ كول سلو، ٣ علب صوص، ٤ عيش كايزر",
+"p": 320
+},
+{
+"n": "بوكس صغير",
+"d": "٤ قطع ستريبس، بطاطس، كول سلو، ٣ علب صوص، ٢ عيش كايزر",
+"p": 150
+}
+]
+}
+];
+var CONFIG={
+  name:"أن كات",
+  tagline:"اطلب من على الترابيزة",
+  whatsapp:"201013585550",   // WhatsApp number, international format, no + or leading 0
+  currency:"ج.م",
+  categories:MENU
+};
+</script>
+<div id="splash"><div class="ar">أن كات</div><div class="en" dir="ltr">Uncut</div><p>مطعم</p></div>
+<div id="menuview"><header><div class="ar">أن كات</div><div class="en" dir="ltr">Uncut</div><p class="sub">مطعم</p><p class="tg" id="tg"></p><span id="tbl"></span></header>
+<nav id="nav"></nav>
+<main id="list"></main>
+<footer>الأسعار بالجنيه المصري</footer>
+</div>
+<div id="bar"><button id="open"></button></div>
+<div id="sheet"><div class="box">
+  <h2>طلبك</h2><div id="lines"></div><div class="tot" id="tot"></div>
+  <input id="who" placeholder="الاسم (اختياري)">
+  <input id="tn" placeholder="رقم الترابيزة" inputmode="numeric">
+  <textarea id="note" rows="2" placeholder="ملاحظات (من غير بصل، زيادة صوص...)"></textarea>
+  <button class="go" id="send">ابعت الطلب على واتساب</button>
+  <button class="x" id="close">رجوع للمنيو</button>
+</div></div>
+<script>
+var $=function(i){return document.getElementById(i)};
+var cart={},cur=0,q=new URLSearchParams(location.search);
+$("tg").textContent=CONFIG.tagline;
+var table=q.get("table")||q.get("t")||"";
+if(table){$("tbl").textContent="ترابيزة "+table;$("tn").value=table}else $("tbl").style.display="none";
+function key(c,i){return c+"-"+i}
+function drawNav(){$("nav").innerHTML="";CONFIG.categories.forEach(function(c,i){var b=document.createElement("button");b.textContent=c.name;b.className=i==cur?"on":"";b.onclick=function(){cur=i;drawNav();drawList();window.scrollTo(0,0)};$("nav").appendChild(b)});var on=$("nav").querySelector(".on");if(on&&on.scrollIntoView)on.scrollIntoView({inline:"center",block:"nearest"})}
+function drawList(){var l=$("list");l.innerHTML="";CONFIG.categories[cur].items.forEach(function(it,i){var k=key(cur,i),n=cart[k]||0;var d=document.createElement("div");d.className="item";
+d.innerHTML='<div class="i"><b></b><small></small><div class="price"></div></div><div class="qty"></div>';
+d.querySelector("b").textContent=it.n;var sm=d.querySelector("small");if(it.d)sm.textContent=it.d;else sm.style.display="none";d.querySelector(".price").textContent=it.p+" "+CONFIG.currency;
+var qd=d.querySelector(".qty");
+if(n>0){var m=document.createElement("button");m.className="m";m.textContent="\u2212";m.onclick=function(){chg(k,-1)};var s=document.createElement("span");s.textContent=n;qd.appendChild(m);qd.appendChild(s)}
+var p=document.createElement("button");p.textContent="+";p.onclick=function(){chg(k,1)};qd.appendChild(p);l.appendChild(d)})}
+function chg(k,d){cart[k]=Math.max(0,(cart[k]||0)+d);if(!cart[k])delete cart[k];drawList();bar()}
+function lines(){var o=[],t=0;Object.keys(cart).forEach(function(k){var a=k.split("-"),it=CONFIG.categories[a[0]].items[a[1]];o.push({n:it.n,q:cart[k],s:it.p*cart[k]});t+=it.p*cart[k]});return{o:o,t:t}}
+function bar(){var L=lines(),c=L.o.reduce(function(a,x){return a+x.q},0);$("bar").style.display=c?"block":"none";$("open").textContent="راجع الطلب ("+c+") - "+L.t+" "+CONFIG.currency}
+$("open").onclick=function(){var L=lines();$("lines").innerHTML="";L.o.forEach(function(x){var r=document.createElement("div");r.className="row";r.innerHTML="<span></span><span></span>";r.children[0].textContent=x.q+" × "+x.n;r.children[1].textContent=x.s+" "+CONFIG.currency;$("lines").appendChild(r)});$("tot").textContent="الإجمالي: "+L.t+" "+CONFIG.currency;$("sheet").style.display="flex"};
+$("close").onclick=function(){$("sheet").style.display="none"};
+$("send").onclick=function(){var L=lines();if(!L.o.length)return;var m="طلب جديد - "+CONFIG.name+"\n";var tn=$("tn").value.trim(),w=$("who").value.trim(),nt=$("note").value.trim();
+if(tn)m+="ترابيزة: "+tn+"\n";if(w)m+="الاسم: "+w+"\n";m+="\n";L.o.forEach(function(x){m+=x.q+" × "+x.n+" = "+x.s+" "+CONFIG.currency+"\n"});m+="\nالإجمالي: "+L.t+" "+CONFIG.currency;if(nt)m+="\nملاحظات: "+nt;
+location.href="https://wa.me/"+CONFIG.whatsapp+"?text="+encodeURIComponent(m)};
+drawNav();drawList();bar();
+(function(){if(location.hash)return;var sp=$("splash");sp.style.display="flex";document.body.style.overflow="hidden";
+setTimeout(function(){sp.classList.add("out");setTimeout(function(){sp.style.display="none";document.body.style.overflow=""},850)},3000)})();
+</script>
+</body>
+</html>
