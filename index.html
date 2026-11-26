@@ -1846,8 +1846,8 @@ var CONFIG={
   categories:[]
 };
 </script>
-<div id="picker"><header><h1>OVN</h1><p>Choose your branch to see the menu and order</p></header><main class="pk" id="pk"></main></div>
-<div id="menuview"><header><h1 id="nm"></h1><p id="tg"></p><span id="tbl"></span><a href="#" style="display:block;margin-top:8px;color:#fff;font-size:13px;opacity:.9">Change branch</a></header>
+<div id="picker"><header><h1>OVN</h1><p style="font-size:18px;font-weight:800">Cafe &amp; Bakery</p><p>Choose your branch to see the menu and order</p></header><main class="pk" id="pk"></main></div>
+<div id="menuview"><header><h1 id="nm"></h1><p id="sb" style="font-size:18px;font-weight:800"></p><p id="tg"></p><span id="tbl"></span><a href="#" style="display:block;margin-top:8px;color:#fff;font-size:13px;opacity:.9">Change branch</a></header>
 <nav id="nav"></nav>
 <main id="list"></main>
 <footer>Prices in Egyptian pounds (LE)</footer>
@@ -1887,7 +1887,7 @@ BRANCHES.forEach(function(b){var a=document.createElement("a");a.href="#"+b.id;a
 var curBranch=null;
 function route(){var id=location.hash.replace("#",""),b=null;BRANCHES.forEach(function(x){if(x.id==id)b=x});
 if(!b){curBranch=null;$("picker").style.display="block";$("menuview").style.display="none";$("bar").style.display="none";$("sheet").style.display="none";document.title="Choose a branch";window.scrollTo(0,0);return}
-if(curBranch!==b.id){curBranch=b.id;cart={};cur=0;CONFIG.categories=MENUS[b.menu];CONFIG.branch=b.name;$("nm").textContent=CONFIG.name+" - "+b.name;document.title=CONFIG.name+" - "+b.name;drawNav();drawList();bar();window.scrollTo(0,0)}
+if(curBranch!==b.id){curBranch=b.id;cart={};cur=0;CONFIG.categories=MENUS[b.menu];CONFIG.branch=b.name;$("nm").textContent=CONFIG.name;$("sb").textContent="Cafe & Bakery - "+b.name;document.title=CONFIG.name+" - "+b.name;drawNav();drawList();bar();window.scrollTo(0,0)}
 $("picker").style.display="none";$("menuview").style.display="block";$("sheet").style.display="none";bar()}
 window.addEventListener("hashchange",route);route();
 </script>
