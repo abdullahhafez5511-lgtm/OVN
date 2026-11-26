@@ -484,14 +484,13 @@ var MENU=[
 ];
 var CONFIG={
   name:"أن كات",
-  tagline:"اطلب من على الترابيزة",
   whatsapp:"201013585550",   // WhatsApp number, international format, no + or leading 0
   currency:"ج.م",
   categories:MENU
 };
 </script>
-<div id="splash"><div class="ar">أن كات</div><div class="en" dir="ltr">Uncut</div><p>مطعم</p></div>
-<div id="menuview"><header><div class="ar">أن كات</div><div class="en" dir="ltr">Uncut</div><p class="sub">مطعم</p><p class="tg" id="tg"></p><span id="tbl"></span></header>
+<div id="splash"><div class="ar">أن كات</div><div class="en" dir="ltr">Uncut</div></div>
+<div id="menuview"><header><div class="ar">أن كات</div><div class="en" dir="ltr">Uncut</div><span id="tbl"></span></header>
 <nav id="nav"></nav>
 <main id="list"></main>
 <footer>الأسعار بالجنيه المصري</footer>
@@ -508,7 +507,6 @@ var CONFIG={
 <script>
 var $=function(i){return document.getElementById(i)};
 var cart={},cur=0,q=new URLSearchParams(location.search);
-$("tg").textContent=CONFIG.tagline;
 var table=q.get("table")||q.get("t")||"";
 if(table){$("tbl").textContent="ترابيزة "+table;$("tn").value=table}else $("tbl").style.display="none";
 function key(c,i){return c+"-"+i}
