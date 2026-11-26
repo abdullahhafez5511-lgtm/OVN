@@ -69,7 +69,6 @@ footer{color:#6d695f}
 #done{position:fixed;inset:0;z-index:200;background:#000;color:#fff;display:none;align-items:center;justify-content:center;text-align:center;padding:24px}
 #done .dbox{max-width:360px;width:100%}#done h2{font-size:30px;margin:18px 0 8px}#done p{color:#bdb8ad;font-size:17px;margin:0 0 28px}
 #back{width:100%;border:0;background:#ffd21f;color:#111;font:inherit;font-size:17px;font-weight:800;padding:14px;border-radius:6px}
-#wal{display:block;margin-top:18px;color:#8a857b;font-size:13px}
 </style>
 </head>
 <body>
@@ -517,7 +516,7 @@ var CONFIG={
 <main id="list"></main>
 <footer>الأسعار بالجنيه المصري</footer>
 </div>
-<div id="done"><div class="dbox"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#ffd21f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-7"/></svg><h2>تم إرسال طلبك</h2><p>مدة التوصيل من ٣٠ إلى ٤٥ دقيقة</p><button id="back">الرجوع للمنيو</button><a id="wal" href="#">لو الواتساب مافتحش اضغط هنا</a></div></div>
+<div id="done"><div class="dbox"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#ffd21f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-7"/></svg><h2>تم إرسال طلبك</h2><p>مدة التوصيل من ٣٠ إلى ٤٥ دقيقة</p><button id="back">الرجوع للمنيو</button></div></div>
 <div id="bar"><button id="open"></button></div>
 <div id="sheet"><div class="box">
   <h2>طلبك</h2><div id="lines"></div><div class="tot" id="tot"></div>
@@ -554,7 +553,7 @@ var m="طلب جديد - "+CONFIG.name+"\n",w=$("who").value.trim(),ph=$("ph").v
 if(w)m+="الاسم: "+w+"\n";if(ph)m+="الموبايل: "+ph+"\n";m+="العنوان: "+ad+"\n\n";L.o.forEach(function(x){m+=x.q+" × "+x.n+" = "+x.s+" "+CONFIG.currency+"\n"});m+="\nمجموع الطلب: "+L.t+" "+CONFIG.currency+"\nالتوصيل: "+CONFIG.delivery+" "+CONFIG.currency+"\nالإجمالي: "+(L.t+CONFIG.delivery)+" "+CONFIG.currency;if(nt)m+="\nملاحظات: "+nt;
 var u="https://wa.me/"+CONFIG.whatsapp+"?text="+encodeURIComponent(m);
 cart={};drawList();bar();$("sheet").style.display="none";$("note").value="";
-$("wal").href=u;$("done").style.display="flex";
+$("done").style.display="flex";
 setTimeout(function(){location.href=u},350)};
 $("back").onclick=function(){$("done").style.display="none";window.scrollTo(0,0)};
 drawNav();drawList();bar();
