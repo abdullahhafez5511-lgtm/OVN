@@ -36,6 +36,10 @@ footer{text-align:center;color:#9ca3af;font-size:12px;padding:16px}
 .pk a{display:flex;align-items:center;justify-content:space-between;background:#fff;border-radius:16px;padding:20px 18px;margin-bottom:12px;box-shadow:0 1px 5px #0002;color:#1f2937;text-decoration:none;font-size:20px;font-weight:700}
 .pk a span{color:#f97316;font-size:26px}.pk a:active{background:#ffedd5}
 #picker{min-height:100vh}
+#splash{position:fixed;inset:0;z-index:100;background:#f97316;color:#fff;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;transition:opacity .8s ease;opacity:1}
+#splash h1{margin:0;font-size:64px;font-weight:900;letter-spacing:6px}
+#splash p{margin:10px 0 0;font-size:22px;font-weight:800}
+#splash.out{opacity:0}
 </style>
 </head>
 <body>
@@ -1846,6 +1850,7 @@ var CONFIG={
   categories:[]
 };
 </script>
+<div id="splash"><h1>OVN</h1><p>Cafe &amp; Bakery</p></div>
 <div id="picker"><header><h1>OVN</h1><p style="font-size:18px;font-weight:800">Cafe &amp; Bakery</p><p>Choose your branch to see the menu and order</p></header><main class="pk" id="pk"></main></div>
 <div id="menuview"><header><h1 id="nm"></h1><p id="sb" style="font-size:18px;font-weight:800"></p><p id="tg"></p><span id="tbl"></span><a href="#" style="display:block;margin-top:8px;color:#fff;font-size:13px;opacity:.9">Change branch</a></header>
 <nav id="nav"></nav>
@@ -1890,6 +1895,8 @@ if(!b){curBranch=null;$("picker").style.display="block";$("menuview").style.disp
 if(curBranch!==b.id){curBranch=b.id;cart={};cur=0;CONFIG.categories=MENUS[b.menu];CONFIG.branch=b.name;$("nm").textContent=CONFIG.name;$("sb").textContent="Cafe & Bakery - "+b.name;document.title=CONFIG.name+" - "+b.name;drawNav();drawList();bar();window.scrollTo(0,0)}
 $("picker").style.display="none";$("menuview").style.display="block";$("sheet").style.display="none";bar()}
 window.addEventListener("hashchange",route);route();
+(function(){if(location.hash)return;var sp=$("splash");sp.style.display="flex";document.body.style.overflow="hidden";
+setTimeout(function(){sp.classList.add("out");setTimeout(function(){sp.style.display="none";document.body.style.overflow=""},850)},4000)})();
 </script>
 </body>
 </html>
