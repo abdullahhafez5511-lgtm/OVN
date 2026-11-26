@@ -45,6 +45,7 @@ footer{text-align:center;color:#9ca3af;font-size:12px;padding:16px}
 #splash h1{margin:0;font-size:64px;font-weight:900;letter-spacing:6px}
 #splash p{margin:10px 0 0;font-size:22px;font-weight:800}
 #splash.out{opacity:0}
+#osp{position:fixed;inset:0;z-index:1000;background:#6f4e37;color:#fff;display:flex;align-items:center;justify-content:center;font-size:72px;font-weight:900;letter-spacing:6px;transition:opacity .5s ease;opacity:1}#osp.out{opacity:0}
 </style>
 </head>
 <body>
@@ -1904,5 +1905,7 @@ window.addEventListener("hashchange",route);route();
 (function(){if(location.hash)return;var sp=$("splash");sp.style.display="flex";document.body.style.overflow="hidden";
 setTimeout(function(){sp.classList.add("out");setTimeout(function(){sp.style.display="none";document.body.style.overflow=""},850)},3000)})();
 </script>
+<div id="osp">OVN</div>
+<script>(function(){var o=document.getElementById("osp");document.body.style.overflow="hidden";setTimeout(function(){o.className="out";document.body.style.overflow="";setTimeout(function(){o.remove()},500)},3000)})()</script>
 </body>
 </html>
