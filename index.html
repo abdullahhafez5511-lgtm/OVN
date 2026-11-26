@@ -1866,7 +1866,7 @@ var CONFIG={
 <div id="sheet"><div class="box">
   <h2>Your order</h2><div id="lines"></div><div class="tot" id="tot"></div>
   <input id="who" placeholder="Name (optional)">
-  <input id="tn" placeholder="Table number" inputmode="numeric">
+  <input id="tn" placeholder="Phone number" inputmode="tel" type="tel">
   <textarea id="note" rows="2" placeholder="Notes (extra sugar, no ice...)"></textarea>
   <button class="go" id="send">Send order on WhatsApp</button>
   <button class="x" id="close">Back to menu</button>
@@ -1876,7 +1876,7 @@ var $=function(i){return document.getElementById(i)};
 var cart={},cur=0,q=new URLSearchParams(location.search);
 $("tg").textContent=CONFIG.tagline;
 var table=q.get("table")||q.get("t")||"";
-if(table){$("tbl").textContent="Table "+table;$("tn").value=table}else $("tbl").style.display="none";
+if(table){$("tbl").textContent="Table "+table}else $("tbl").style.display="none";
 function key(c,i){return c+"-"+i}
 function drawNav(){$("nav").innerHTML="";CONFIG.categories.forEach(function(c,i){var b=document.createElement("button");b.textContent=c.name;b.className=i==cur?"on":"";b.onclick=function(){cur=i;drawNav();drawList();window.scrollTo(0,0)};$("nav").appendChild(b)});var on=$("nav").querySelector(".on");if(on&&on.scrollIntoView)on.scrollIntoView({inline:"center",block:"nearest"})}
 function drawList(){var l=$("list");l.innerHTML="";CONFIG.categories[cur].items.forEach(function(it,i){var k=key(cur,i),n=cart[k]||0;var d=document.createElement("div");d.className="item";
@@ -1891,7 +1891,7 @@ function bar(){var L=lines(),c=L.o.reduce(function(a,x){return a+x.q},0);$("bar"
 $("open").onclick=function(){var L=lines();$("lines").innerHTML="";L.o.forEach(function(x){var r=document.createElement("div");r.className="row";r.innerHTML="<span></span><span></span>";r.children[0].textContent=x.q+" × "+x.n;r.children[1].textContent=x.s+" "+CONFIG.currency;$("lines").appendChild(r)});$("tot").textContent="Total: "+L.t+" "+CONFIG.currency;$("sheet").style.display="flex"};
 $("close").onclick=function(){$("sheet").style.display="none"};
 $("send").onclick=function(){var L=lines();if(!L.o.length)return;var m="New order - "+CONFIG.name+" - "+CONFIG.branch+"\n";var tn=$("tn").value.trim(),w=$("who").value.trim(),nt=$("note").value.trim();
-if(tn)m+="Table: "+tn+"\n";if(w)m+="Name: "+w+"\n";m+="\n";L.o.forEach(function(x){m+=x.q+" × "+x.n+" = "+x.s+" "+CONFIG.currency+"\n"});m+="\nTotal: "+L.t+" "+CONFIG.currency;if(nt)m+="\nNotes: "+nt;
+if(tn)m+="Phone: "+tn+"\n";if(w)m+="Name: "+w+"\n";m+="\n";L.o.forEach(function(x){m+=x.q+" × "+x.n+" = "+x.s+" "+CONFIG.currency+"\n"});m+="\nTotal: "+L.t+" "+CONFIG.currency;if(nt)m+="\nNotes: "+nt;
 location.href="https://wa.me/"+CONFIG.whatsapp+"?text="+encodeURIComponent(m)};
 BRANCHES.forEach(function(b){var a=document.createElement("a");a.href="#"+b.id;a.innerHTML="<b></b><span>&rsaquo;</span>";a.firstChild.textContent=b.name;$("pk").appendChild(a)});
 var curBranch=null;
