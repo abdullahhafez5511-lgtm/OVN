@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f97316">
+<title>منيو</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;background:#fff7ed;color:#1f2937;padding-bottom:90px}
+header{background:#f97316;color:#fff;padding:22px 16px 14px;text-align:center}
+header h1{margin:0;font-size:26px}header p{margin:4px 0 0;opacity:.9;font-size:14px}
+#tbl{display:inline-block;margin-top:8px;background:#fff3;border-radius:20px;padding:3px 12px;font-size:13px}
+nav{position:sticky;top:0;z-index:5;background:#fff;display:flex;gap:8px;overflow-x:auto;padding:10px;box-shadow:0 1px 6px #0001}
+nav button{flex:none;border:0;background:#ffedd5;color:#9a3412;padding:8px 16px;border-radius:20px;font:inherit;font-size:15px}
+nav button.on{background:#f97316;color:#fff}
+main{padding:12px;max-width:640px;margin:auto}
+.item{background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 4px #0001}
+.item .i{flex:1}.item b{display:block;font-size:16px}.item small{color:#6b7280}
+.price{color:#ea580c;font-weight:700;margin-top:4px}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:34px;height:34px;border:0;border-radius:50%;background:#f97316;color:#fff;font-size:20px;line-height:1}
+.qty button.m{background:#e5e7eb;color:#374151}
+.qty span{min-width:18px;text-align:center;font-weight:700}
+#bar{position:fixed;bottom:0;left:0;right:0;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#fff;box-shadow:0 -2px 10px #0002;display:none}
+#bar button{width:100%;border:0;background:#16a34a;color:#fff;font:inherit;font-size:17px;font-weight:700;padding:14px;border-radius:12px}
+#sheet{position:fixed;inset:0;background:#0007;display:none;align-items:flex-end;z-index:10}
+#sheet .box{background:#fff;width:100%;max-height:85vh;overflow:auto;border-radius:18px 18px 0 0;padding:16px;max-width:640px;margin:auto}
+#sheet h2{margin:0 0 10px}
+.row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee}
+input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #d1d5db;border-radius:10px;margin-top:8px}
+.tot{font-weight:700;font-size:18px;margin:10px 0}
+.go{width:100%;border:0;background:#16a34a;color:#fff;font:inherit;font-size:17px;font-weight:700;padding:14px;border-radius:12px;margin-top:10px}
+.x{width:100%;border:0;background:#f3f4f6;font:inherit;padding:12px;border-radius:12px;margin-top:8px}
+footer{text-align:center;color:#9ca3af;font-size:12px;padding:16px}
+</style>
+</head>
+<body>
+<script>
+/* ===== إعدادات الكافيه: غيّر هنا بس ===== */
+var CONFIG={
+  name:"كافيه النيل",
+  tagline:"اطلب من مكانك وهنجيلك",
+  whatsapp:"201000000000",   // رقم واتساب الكافيه بالصيغة الدولية بدون + أو صفر
+  currency:"ج",
+  categories:[
+    {name:"مشروبات ساخنة",items:[
+      {n:"قهوة تركي",d:"سادة أو مظبوط",p:30},
+      {n:"نسكافيه",d:"بالحليب",p:35},
+      {n:"شاي",d:"كوب أو ببراد",p:20},
+      {n:"لاتيه",d:"",p:55}]},
+    {name:"مشروبات باردة",items:[
+      {n:"آيس كوفي",d:"",p:60},
+      {n:"عصير ليمون بالنعناع",d:"",p:40},
+      {n:"عصير فراولة",d:"",p:45},
+      {n:"موهيتو",d:"",p:50}]},
+    {name:"شيشة",items:[
+      {n:"معسل تفاحتين",d:"",p:45},
+      {n:"معسل نعناع",d:"",p:45}]},
+    {name:"حلويات وسناكس",items:[
+      {n:"وافل",d:"شوكولاتة أو فراولة",p:70},
+      {n:"كريب",d:"",p:65},
+      {n:"بطاطس مقلية",d:"",p:35},
+      {n:"ساندوتش جبنة",d:"",p:40}]}
+  ]
+};
+</script>
+<header><h1 id="nm"></h1><p id="tg"></p><span id="tbl"></span></header>
+<nav id="nav"></nav>
+<main id="list"></main>
+<footer>الأسعار بالجنيه المصري</footer>
+<div id="bar"><button id="open"></button></div>
+<div id="sheet"><div class="box">
+  <h2>طلبك</h2><div id="lines"></div><div class="tot" id="tot"></div>
+  <input id="who" placeholder="الاسم (اختياري)">
+  <input id="tn" placeholder="رقم الطاولة" inputmode="numeric">
+  <textarea id="note" rows="2" placeholder="ملاحظات (سكر زيادة، من غير تلج...)"></textarea>
+  <button class="go" id="send">إرسال الطلب على واتساب</button>
+  <button class="x" id="close">رجوع للمنيو</button>
+</div></div>
+<script>
+var $=function(i){return document.getElementById(i)};
+var cart={},cur=0,q=new URLSearchParams(location.search);
+document.title=CONFIG.name;$("nm").textContent=CONFIG.name;$("tg").textContent=CONFIG.tagline;
+var table=q.get("table")||q.get("t")||"";
+if(table){$("tbl").textContent="طاولة "+table;$("tn").value=table}else $("tbl").style.display="none";
+function key(c,i){return c+"-"+i}
+function drawNav(){$("nav").innerHTML="";CONFIG.categories.forEach(function(c,i){var b=document.createElement("button");b.textContent=c.name;b.className=i==cur?"on":"";b.onclick=function(){cur=i;drawNav();drawList()};$("nav").appendChild(b)})}
+function drawList(){var l=$("list");l.innerHTML="";CONFIG.categories[cur].items.forEach(function(it,i){var k=key(cur,i),n=cart[k]||0;var d=document.createElement("div");d.className="item";
+d.innerHTML='<div class="i"><b></b><small></small><div class="price"></div></div><div class="qty"></div>';
+d.querySelector("b").textContent=it.n;d.querySelector("small").textContent=it.d;d.querySelector(".price").textContent=it.p+" "+CONFIG.currency;
+var qd=d.querySelector(".qty");
+if(n>0){var m=document.createElement("button");m.className="m";m.textContent="−";m.onclick=function(){chg(k,-1)};var s=document.createElement("span");s.textContent=n;qd.appendChild(m);qd.appendChild(s)}
+var p=document.createElement("button");p.textContent="+";p.onclick=function(){chg(k,1)};qd.appendChild(p);l.appendChild(d)})}
+function chg(k,d){cart[k]=Math.max(0,(cart[k]||0)+d);if(!cart[k])delete cart[k];drawList();bar()}
+function lines(){var o=[],t=0;Object.keys(cart).forEach(function(k){var a=k.split("-"),it=CONFIG.categories[a[0]].items[a[1]];o.push({n:it.n,q:cart[k],s:it.p*cart[k]});t+=it.p*cart[k]});return{o:o,t:t}}
+function bar(){var L=lines(),c=L.o.reduce(function(a,x){return a+x.q},0);$("bar").style.display=c?"block":"none";$("open").textContent="مراجعة الطلب ("+c+") - "+L.t+" "+CONFIG.currency}
+$("open").onclick=function(){var L=lines();$("lines").innerHTML="";L.o.forEach(function(x){var r=document.createElement("div");r.className="row";r.innerHTML="<span></span><span></span>";r.children[0].textContent=x.q+" × "+x.n;r.children[1].textContent=x.s+" "+CONFIG.currency;$("lines").appendChild(r)});$("tot").textContent="الإجمالي: "+L.t+" "+CONFIG.currency;$("sheet").style.display="flex"};
+$("close").onclick=function(){$("sheet").style.display="none"};
+$("send").onclick=function(){var L=lines();if(!L.o.length)return;var m="طلب جديد - "+CONFIG.name+"\n";var tn=$("tn").value.trim(),w=$("who").value.trim(),nt=$("note").value.trim();
+if(tn)m+="طاولة: "+tn+"\n";if(w)m+="الاسم: "+w+"\n";m+="\n";L.o.forEach(function(x){m+=x.q+" × "+x.n+" = "+x.s+" "+CONFIG.currency+"\n"});m+="\nالإجمالي: "+L.t+" "+CONFIG.currency;if(nt)m+="\nملاحظات: "+nt;
+location.href="https://wa.me/"+CONFIG.whatsapp+"?text="+encodeURIComponent(m)};
+drawNav();drawList();
+</script>
+</body>
+</html>
