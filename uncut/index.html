@@ -520,7 +520,7 @@ var CONFIG={
 <div id="done"><div class="dbox"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#ffd21f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-7"/></svg><h2>تم إرسال طلبك</h2><p>مدة التوصيل من ٣٠ إلى ٤٥ دقيقة</p><button id="back">الرجوع للمنيو</button></div></div>
 <div id="bar"><button id="open"></button></div>
 <div id="sheet"><div class="box">
-  <h2>طلبك</h2><div id="lines"></div><div class="tot" id="tot"></div>
+  <div id="err" style="display:none;background:#e0261a;color:#fff;font-weight:800;text-align:center;padding:10px 12px;border-radius:10px;margin:0 0 12px"></div><h2>طلبك</h2><div id="lines"></div><div class="tot" id="tot"></div>
   <input id="who" placeholder="الاسم">
   <input id="ph" placeholder="رقم الموبايل" inputmode="tel" type="tel"><input id="ad" placeholder="العنوان بالتفصيل (مطلوب)">
   <textarea id="note" rows="2" placeholder="ملاحظات (من غير بصل، زيادة صوص...)"></textarea>
@@ -549,7 +549,9 @@ function lines(){var o=[],t=0;Object.keys(cart).forEach(function(k){var a=k.spli
 function bar(){var L=lines(),c=L.o.reduce(function(a,x){return a+x.q},0);$("bar").style.display=c?"block":"none";$("open").textContent="تأكيد الطلب ("+c+") - "+(L.t+CONFIG.delivery)+" "+CONFIG.currency}
 $("open").onclick=function(){var L=lines();$("lines").innerHTML="";L.o.forEach(function(x){var r=document.createElement("div");r.className="row";r.innerHTML="<span></span><span></span>";r.children[0].textContent=x.q+" × "+x.n;r.children[1].textContent=x.s+" "+CONFIG.currency;$("lines").appendChild(r)});var dr=document.createElement("div");dr.className="row";dr.innerHTML="<span></span><span></span>";dr.children[0].textContent="التوصيل";dr.children[1].textContent=CONFIG.delivery+" "+CONFIG.currency;$("lines").appendChild(dr);$("tot").textContent="الإجمالي: "+(L.t+CONFIG.delivery)+" "+CONFIG.currency;$("sheet").style.display="flex"};
 $("close").onclick=function(){$("sheet").style.display="none"};
-$("send").onclick=function(){var L=lines();if(!L.o.length)return;var w0=$("who").value.trim();if(!w0){$("who").style.borderColor="#e0261a";$("who").placeholder="من فضلك ادخل اسمك";$("who").focus();return}var ph0=$("ph").value.trim();if(!ph0){$("ph").style.borderColor="#e0261a";$("ph").placeholder="من فضلك ادخل رقم الموبايل";$("ph").focus();return}var ad=$("ad").value.trim();if(!ad){$("ad").style.borderColor="#e0261a";$("ad").placeholder="من فضلك ادخل العنوان";$("ad").focus();return}
+function err(t){$("err").textContent=t;$("err").style.display="block"}
+["who","ph","ad"].forEach(function(i){$(i).addEventListener("input",function(){$("err").style.display="none"})});
+$("send").onclick=function(){var L=lines();if(!L.o.length)return;$("err").style.display="none";var w0=$("who").value.trim();if(!w0){$("who").style.borderColor="#e0261a";err("من فضلك ادخل اسمك");$("who").focus();return}var ph0=$("ph").value.trim();if(!ph0){$("ph").style.borderColor="#e0261a";err("من فضلك ادخل رقم الموبايل");$("ph").focus();return}var ad=$("ad").value.trim();if(!ad){$("ad").style.borderColor="#e0261a";err("من فضلك ادخل العنوان");$("ad").focus();return}
 var m="طلب جديد - "+CONFIG.name+"\n",w=$("who").value.trim(),ph=$("ph").value.trim(),nt=$("note").value.trim();
 if(w)m+="الاسم: "+w+"\n";if(ph)m+="الموبايل: "+ph+"\n";m+="العنوان: "+ad+"\n\n";L.o.forEach(function(x){m+=x.q+" × "+x.n+" = "+x.s+" "+CONFIG.currency+"\n"});m+="\nمجموع الطلب: "+L.t+" "+CONFIG.currency+"\nالتوصيل: "+CONFIG.delivery+" "+CONFIG.currency+"\nالإجمالي: "+(L.t+CONFIG.delivery)+" "+CONFIG.currency;if(nt)m+="\nملاحظات: "+nt;
 var u="https://wa.me/"+CONFIG.whatsapp+"?text="+encodeURIComponent(m);
