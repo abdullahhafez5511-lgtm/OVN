@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f97316">
+<title>Menu</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;background:#fff7ed;color:#1f2937;padding-bottom:90px}
+header{background:#f97316;color:#fff;padding:22px 16px 14px;text-align:center}
+header h1{margin:0;font-size:26px}header p{margin:4px 0 0;opacity:.9;font-size:14px}
+#tbl{display:inline-block;margin-top:8px;background:#fff3;border-radius:20px;padding:3px 12px;font-size:13px}
+nav{position:sticky;top:0;z-index:5;background:#fff;display:flex;gap:8px;overflow-x:auto;padding:10px;box-shadow:0 1px 6px #0001}
+nav button{flex:none;border:0;background:#ffedd5;color:#9a3412;padding:8px 16px;border-radius:20px;font:inherit;font-size:15px}
+nav button.on{background:#f97316;color:#fff}
+main{padding:12px;max-width:640px;margin:auto}
+.item{background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 4px #0001}
+.item .i{flex:1}.item b{display:block;font-size:16px}.item small{color:#6b7280;unicode-bidi:plaintext}
+.price{color:#ea580c;font-weight:700;margin-top:4px}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:34px;height:34px;border:0;border-radius:50%;background:#f97316;color:#fff;font-size:20px;line-height:1}
+.qty button.m{background:#e5e7eb;color:#374151}
+.qty span{min-width:18px;text-align:center;font-weight:700}
+#bar{position:fixed;bottom:0;left:0;right:0;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#fff;box-shadow:0 -2px 10px #0002;display:none}
+#bar button{width:100%;border:0;background:#16a34a;color:#fff;font:inherit;font-size:17px;font-weight:700;padding:14px;border-radius:12px}
+#sheet{position:fixed;inset:0;background:#0007;display:none;align-items:flex-end;z-index:10}
+#sheet .box{background:#fff;width:100%;max-height:85vh;overflow:auto;border-radius:18px 18px 0 0;padding:16px;max-width:640px;margin:auto}
+#sheet h2{margin:0 0 10px}
+.row{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid #eee}
+input,textarea{width:100%;font:inherit;padding:10px;border:1px solid #d1d5db;border-radius:10px;margin-top:8px}
+.tot{font-weight:700;font-size:18px;margin:10px 0}
+.go{width:100%;border:0;background:#16a34a;color:#fff;font:inherit;font-size:17px;font-weight:700;padding:14px;border-radius:12px;margin-top:10px}
+.x{width:100%;border:0;background:#f3f4f6;font:inherit;padding:12px;border-radius:12px;margin-top:8px}
+footer{text-align:center;color:#9ca3af;font-size:12px;padding:16px}
+.pk a{display:flex;align-items:center;justify-content:space-between;background:#fff;border-radius:16px;padding:20px 18px;margin-bottom:12px;box-shadow:0 1px 5px #0002;color:#1f2937;text-decoration:none;font-size:20px;font-weight:700}
+.pk a span{color:#f97316;font-size:26px}.pk a:active{background:#ffedd5}
+#picker{min-height:100vh}
+</style>
+</head>
+<body>
+<script>
+/* ===== Cafe settings: edit here only ===== */
+var BRANCHES=[
+  {id:"mahalla",name:"Mahalla",menu:"std"},
+  {id:"tanta",name:"Tanta",menu:"std"},
+  {id:"shebin",name:"Shebin El Kom",menu:"std"},
+  {id:"mansoura",name:"Mansoura",menu:"mansoura"}
+];
+var MENUS={
+std:[
+{
+"name": "Coffee Drink",
+"items": [
+{
+"n": "Espresso",
+"d": "",
+"p": 52
+},
+{
+"n": "Macchiato",
+"d": "",
+"p": 60
+},
+{
+"n": "Cortado",
+"d": "",
+"p": 65
+},
+{
+"n": "Cortado Mocha",
+"d": "",
+"p": 65
+},
+{
+"n": "Espresso Affogato",
+"d": "",
+"p": 64
+},
+{
+"n": "Espresso Conpana",
+"d": "",
+"p": 60
+},
+{
+"n": "Cappuccino",
+"d": "",
+"p": 85
+},
+{
+"n": "Latte",
+"d": "",
+"p": 77
+},
+{
+"n": "Spanish Latte",
+"d": "",
+"p": 86
+},
+{
+"n": "Mocha",
+"d": "",
+"p": 81
+},
+{
+"n": "Caramel Macchiato",
+"d": "",
+"p": 81
+},
+{
+"n": "Matcha",
+"d": "",
+"p": 106
+},
+{
+"n": "Flat White",
+"d": "",
+"p": 107
+},
+{
+"n": "Salted Caramel Latte",
+"d": "",
+"p": 89
+},
+{
+"n": "Turkish Coffee",
+"d": "",
+"p": 43
+},
+{
+"n": "French Coffee",
+"d": "",
+"p": 62
+},
+{
+"n": "Hazelnut Coffee",
+"d": "",
+"p": 69
+},
+{
+"n": "American Coffee",
+"d": "",
+"p": 75
+}
+]
+},
+{
+"name": "Additions",
+"items": [
+{
+"n": "Addition - Hazelnut",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Vanilla",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Caramel",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Cookies",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Salted Caramel",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Nuts",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Ice Cream",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Kinder",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Lotus",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Pistachio",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Honey",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Nutella",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - White Chocolate",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Dark Chocolate",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Four Seasons",
+"d": "",
+"p": 35
+}
+]
+},
+{
+"name": "Hot Drink",
+"items": [
+{
+"n": "Classic Hot Chocolate",
+"d": "",
+"p": 81
+},
+{
+"n": "Marshmallow Hot Chocolate",
+"d": "",
+"p": 90
+},
+{
+"n": "Cookies Hot Chocolate",
+"d": "",
+"p": 90
+},
+{
+"n": "Hot Cidar",
+"d": "",
+"p": 71
+},
+{
+"n": "Classic Tea",
+"d": "",
+"p": 34
+},
+{
+"n": "Flavour Tea",
+"d": "",
+"p": 39
+},
+{
+"n": "Milk Tea",
+"d": "",
+"p": 40
+},
+{
+"n": "Classic Karak",
+"d": "",
+"p": 63
+},
+{
+"n": "Classic Hipiscas",
+"d": "",
+"p": 71
+},
+{
+"n": "Arabic Coffee",
+"d": "",
+"p": 45
+},
+{
+"n": "Herbs",
+"d": "",
+"p": 47
+}
+]
+},
+{
+"name": "Drip Coffee",
+"items": [
+{
+"n": "V60",
+"d": "",
+"p": 112
+},
+{
+"n": "Aero Press",
+"d": "",
+"p": 103
+},
+{
+"n": "Cold Brew",
+"d": "",
+"p": 103
+}
+]
+},
+{
+"name": "Frappe Coffee",
+"items": [
+{
+"n": "Frappe - Caramel",
+"d": "",
+"p": 108
+},
+{
+"n": "Frappe - Dark",
+"d": "",
+"p": 108
+},
+{
+"n": "Frappe - Cookies",
+"d": "",
+"p": 108
+},
+{
+"n": "Frappe - Snickers",
+"d": "",
+"p": 108
+},
+{
+"n": "Frappe - Salted Caramel",
+"d": "",
+"p": 108
+},
+{
+"n": "Frappe Tiramisu",
+"d": "",
+"p": 120
+}
+]
+},
+{
+"name": "Ice Drink",
+"items": [
+{
+"n": "Iced Chocolate",
+"d": "",
+"p": 86
+},
+{
+"n": "Iced Salted Caramel Latte",
+"d": "",
+"p": 90
+},
+{
+"n": "Iced Latte",
+"d": "",
+"p": 85
+},
+{
+"n": "Iced Caramel Macchiato",
+"d": "",
+"p": 93
+},
+{
+"n": "Iced Matcha",
+"d": "",
+"p": 99
+},
+{
+"n": "Iced Spanish Latte",
+"d": "",
+"p": 97
+},
+{
+"n": "Iced Cappuccino",
+"d": "",
+"p": 94
+},
+{
+"n": "Iced Americano",
+"d": "",
+"p": 84
+},
+{
+"n": "Iced Mocha",
+"d": "",
+"p": 90
+},
+{
+"n": "Iced Matcha Strawberry",
+"d": "",
+"p": 120
+},
+{
+"n": "Iced Matcha Pistachio",
+"d": "",
+"p": 104
+},
+{
+"n": "Iced Matcha Coconut",
+"d": "",
+"p": 108
+},
+{
+"n": "Butter Scotch",
+"d": "",
+"p": 96
+},
+{
+"n": "Ice Hibiscus",
+"d": "",
+"p": 90
+},
+{
+"n": "Ice Hibiscus Flavour",
+"d": "",
+"p": 83
+},
+{
+"n": "Iced Tea Classic",
+"d": "",
+"p": 90
+},
+{
+"n": "Iced Tea Passion",
+"d": "",
+"p": 95
+},
+{
+"n": "Iced Tea Peach",
+"d": "",
+"p": 95
+}
+]
+},
+{
+"name": "Fresh Juice",
+"items": [
+{
+"n": "Strawberry",
+"d": "",
+"p": 90
+},
+{
+"n": "Mango",
+"d": "",
+"p": 90
+},
+{
+"n": "Orange",
+"d": "",
+"p": 90
+},
+{
+"n": "Banana",
+"d": "",
+"p": 90
+},
+{
+"n": "Kiwi Mango",
+"d": "",
+"p": 103
+},
+{
+"n": "Watermelon",
+"d": "",
+"p": 90
+},
+{
+"n": "Lemon Mint",
+"d": "",
+"p": 82
+},
+{
+"n": "Avocado",
+"d": "",
+"p": 129
+}
+]
+},
+{
+"name": "Smoothie",
+"items": [
+{
+"n": "Smoothie - Mango",
+"d": "",
+"p": 99
+},
+{
+"n": "Smoothie - Strawberry",
+"d": "",
+"p": 99
+},
+{
+"n": "Smoothie - Blueberry",
+"d": "",
+"p": 99
+},
+{
+"n": "Smoothie - Peach",
+"d": "",
+"p": 99
+},
+{
+"n": "Smoothie - Lemon",
+"d": "",
+"p": 99
+},
+{
+"n": "Smoothie - Mint Lemon",
+"d": "",
+"p": 99
+},
+{
+"n": "Smoothie - Passion",
+"d": "",
+"p": 99
+},
+{
+"n": "Smoothie - Watermelon",
+"d": "",
+"p": 99
+},
+{
+"n": "Smoothie - Pineapple",
+"d": "",
+"p": 99
+},
+{
+"n": "Smoothie - Mix Berry",
+"d": "",
+"p": 99
+},
+{
+"n": "Smoothie - Raspberry",
+"d": "",
+"p": 99
+}
+]
+},
+{
+"name": "Milk Shake",
+"items": [
+{
+"n": "Milk Shake - Peach",
+"d": "",
+"p": 106
+},
+{
+"n": "Milk Shake - Oreo",
+"d": "",
+"p": 106
+},
+{
+"n": "Milk Shake - Lotus",
+"d": "",
+"p": 106
+},
+{
+"n": "Milk Shake - Kinder",
+"d": "",
+"p": 106
+},
+{
+"n": "Milk Shake - Mocha",
+"d": "",
+"p": 106
+},
+{
+"n": "Milk Shake - Nescafe Caramel",
+"d": "",
+"p": 106
+},
+{
+"n": "Milk Shake - Chocolate",
+"d": "",
+"p": 106
+},
+{
+"n": "Milk Shake - Blueberry",
+"d": "",
+"p": 106
+},
+{
+"n": "Milk Shake - Nutella",
+"d": "",
+"p": 106
+},
+{
+"n": "Milk Shake - Vanilla",
+"d": "",
+"p": 106
+},
+{
+"n": "Milk Shake - Caramel",
+"d": "",
+"p": 106
+},
+{
+"n": "Milk Shake - Raspberry",
+"d": "",
+"p": 106
+},
+{
+"n": "Milk Shake - Mixberry",
+"d": "",
+"p": 106
+},
+{
+"n": "Milk Shake - Strawberry",
+"d": "",
+"p": 106
+},
+{
+"n": "Milk Shake - Passion",
+"d": "",
+"p": 106
+},
+{
+"n": "Milk Shake - Mango",
+"d": "",
+"p": 106
+}
+]
+},
+{
+"name": "Redbull Mojito",
+"items": [
+{
+"n": "Redbull Mojito",
+"d": "Add your favourite flavour (write it in the notes)",
+"p": 86
+}
+]
+},
+{
+"name": "Mojito",
+"items": [
+{
+"n": "Mojito - Iceberry",
+"d": "",
+"p": 86
+},
+{
+"n": "Mojito - Blue Passion",
+"d": "",
+"p": 86
+},
+{
+"n": "Mojito - Sky Blue",
+"d": "",
+"p": 86
+},
+{
+"n": "Mojito - Strawberry Pina Colada",
+"d": "",
+"p": 86
+},
+{
+"n": "Mojito - Kiwi Mint",
+"d": "",
+"p": 86
+},
+{
+"n": "Mojito - Apple Honey",
+"d": "",
+"p": 86
+},
+{
+"n": "Mojito - Red Honey Lemon",
+"d": "",
+"p": 86
+},
+{
+"n": "Mojito - Lemon Honey",
+"d": "",
+"p": 86
+},
+{
+"n": "Mojito - Black Orange",
+"d": "",
+"p": 86
+},
+{
+"n": "Mojito - Coconut Minty",
+"d": "",
+"p": 86
+},
+{
+"n": "Mojito - Classic",
+"d": "",
+"p": 86
+},
+{
+"n": "Mojito - Passion",
+"d": "",
+"p": 86
+},
+{
+"n": "Mojito - Strawberry",
+"d": "",
+"p": 86
+}
+]
+},
+{
+"name": "Breakfast",
+"items": [
+{
+"n": "Plain Croissant",
+"d": "",
+"p": 73
+},
+{
+"n": "Zaatar Cheese Croissant",
+"d": "",
+"p": 93
+},
+{
+"n": "Cheese Olives Croissant",
+"d": "",
+"p": 97
+},
+{
+"n": "Mix Cheese Croissant",
+"d": "",
+"p": 106
+},
+{
+"n": "Smoked Croissant",
+"d": "",
+"p": 116
+},
+{
+"n": "Nutella Croissant",
+"d": "",
+"p": 101
+},
+{
+"n": "Pistachio Croissant",
+"d": "",
+"p": 101
+},
+{
+"n": "Pain Suisse",
+"d": "",
+"p": 84
+},
+{
+"n": "Pain Suisse Chocolate",
+"d": "",
+"p": 93
+},
+{
+"n": "Strawberry Croissant",
+"d": "",
+"p": 101
+},
+{
+"n": "Almond Croissant",
+"d": "",
+"p": 101
+},
+{
+"n": "Toast Mix Cheese",
+"d": "",
+"p": 94
+}
+]
+},
+{
+"name": "Sandwich",
+"items": [
+{
+"n": "Mix Cheese Sandwich",
+"d": "",
+"p": 95
+},
+{
+"n": "Smoked Sandwich",
+"d": "",
+"p": 107
+},
+{
+"n": "Club Sandwich",
+"d": "",
+"p": 101
+},
+{
+"n": "Toast Omelet Cheese",
+"d": "",
+"p": 95
+},
+{
+"n": "Brioche Hot Dog",
+"d": "",
+"p": 107
+},
+{
+"n": "Brioche Turkey Cheese",
+"d": "",
+"p": 107
+},
+{
+"n": "BBQ Sandwich",
+"d": "",
+"p": 95
+},
+{
+"n": "Tandoori Sandwich",
+"d": "",
+"p": 95
+},
+{
+"n": "Tuna Sandwich",
+"d": "",
+"p": 120
+},
+{
+"n": "Focaccia Cheese",
+"d": "",
+"p": 103
+}
+]
+},
+{
+"name": "Begel",
+"items": [
+{
+"n": "Smoked Begel",
+"d": "",
+"p": 103
+},
+{
+"n": "Mix Cheese Begel",
+"d": "",
+"p": 99
+},
+{
+"n": "Omelet Begel",
+"d": "",
+"p": 85
+},
+{
+"n": "Turkey Begel",
+"d": "",
+"p": 99
+},
+{
+"n": "Tuna Brown Begel",
+"d": "",
+"p": 120
+}
+]
+},
+{
+"name": "Salad",
+"items": [
+{
+"n": "Caesar Salad",
+"d": "",
+"p": 112
+},
+{
+"n": "Classic Salad",
+"d": "",
+"p": 82
+},
+{
+"n": "Halloumi Salad",
+"d": "",
+"p": 103
+},
+{
+"n": "Greek Salad",
+"d": "",
+"p": 95
+},
+{
+"n": "Healthy Salad",
+"d": "",
+"p": 108
+}
+]
+},
+{
+"name": "Boba",
+"items": [
+{
+"n": "Salted Caramel Boba",
+"d": "",
+"p": 103
+},
+{
+"n": "Strawberry Boba",
+"d": "",
+"p": 95
+},
+{
+"n": "Blue Boba",
+"d": "",
+"p": 103
+},
+{
+"n": "Chocolate Beans Boba",
+"d": "",
+"p": 103
+},
+{
+"n": "Boba Coffee",
+"d": "",
+"p": 103
+},
+{
+"n": "Boba Tea",
+"d": "",
+"p": 112
+},
+{
+"n": "Brown Sugar Boba",
+"d": "",
+"p": 103
+},
+{
+"n": "Skinny Hawaii",
+"d": "",
+"p": 103
+},
+{
+"n": "Blue Sea",
+"d": "",
+"p": 103
+},
+{
+"n": "Cotton Candy",
+"d": "",
+"p": 103
+}
+]
+},
+{
+"name": "Mini Pancake",
+"items": [
+{
+"n": "Classic Pancake",
+"d": "Choose your favourite sauce (write it in the notes)",
+"p": 77
+}
+]
+},
+{
+"name": "Waffle",
+"items": [
+{
+"n": "Classic Waffle",
+"d": "Choose your favourite sauce (write it in the notes)",
+"p": 77
+}
+]
+}
+],
+mansoura:[
+{
+"name": "Coffee Drink",
+"items": [
+{
+"n": "Espresso",
+"d": "",
+"p": 60
+},
+{
+"n": "Macchiato",
+"d": "",
+"p": 70
+},
+{
+"n": "Cortado",
+"d": "",
+"p": 76
+},
+{
+"n": "Cortado Mocha",
+"d": "",
+"p": 90
+},
+{
+"n": "Espresso Affogato",
+"d": "",
+"p": 75
+},
+{
+"n": "Espresso Conpana",
+"d": "",
+"p": 70
+},
+{
+"n": "Cappuccino",
+"d": "",
+"p": 99
+},
+{
+"n": "Latte",
+"d": "",
+"p": 90
+},
+{
+"n": "Spanish Latte",
+"d": "",
+"p": 100
+},
+{
+"n": "Mocha",
+"d": "",
+"p": 94
+},
+{
+"n": "Caramel Macchiato",
+"d": "",
+"p": 94
+},
+{
+"n": "Matcha",
+"d": "",
+"p": 123
+},
+{
+"n": "Flat White",
+"d": "",
+"p": 94
+},
+{
+"n": "Salted Caramel Latte",
+"d": "",
+"p": 103
+},
+{
+"n": "Turkish Coffee",
+"d": "",
+"p": 50
+},
+{
+"n": "French Coffee",
+"d": "",
+"p": 72
+},
+{
+"n": "Hazelnut Coffee",
+"d": "",
+"p": 80
+},
+{
+"n": "American Coffee",
+"d": "",
+"p": 87
+}
+]
+},
+{
+"name": "Additions",
+"items": [
+{
+"n": "Addition - Hazelnut",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Vanilla",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Caramel",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Cookies",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Salted Caramel",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Nuts",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Ice Cream",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Kinder",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Lotus",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Pistachio",
+"d": "",
+"p": 35
+},
+{
+"n": "Addition - Honey",
+"d": "",
+"p": 35
+}
+]
+},
+{
+"name": "Hot Drink",
+"items": [
+{
+"n": "Classic Hot Chocolate",
+"d": "",
+"p": 94
+},
+{
+"n": "Marshmallow Hot Chocolate",
+"d": "",
+"p": 105
+},
+{
+"n": "Cookies Hot Chocolate",
+"d": "",
+"p": 105
+},
+{
+"n": "Hot Cidar",
+"d": "",
+"p": 83
+},
+{
+"n": "Classic Tea",
+"d": "",
+"p": 40
+},
+{
+"n": "Flavour Tea",
+"d": "",
+"p": 45
+},
+{
+"n": "Milk Tea",
+"d": "",
+"p": 64
+},
+{
+"n": "Classic Karak",
+"d": "",
+"p": 73
+},
+{
+"n": "Classic Hipiscas",
+"d": "",
+"p": 82
+},
+{
+"n": "Arabic Coffee",
+"d": "",
+"p": 52
+},
+{
+"n": "Herbs",
+"d": "",
+"p": 55
+}
+]
+},
+{
+"name": "Drip Coffee",
+"items": [
+{
+"n": "V60",
+"d": "",
+"p": 130
+},
+{
+"n": "Aero Press",
+"d": "",
+"p": 120
+},
+{
+"n": "Cold Brew",
+"d": "",
+"p": 120
+}
+]
+},
+{
+"name": "Frappe Coffee",
+"items": [
+{
+"n": "Frappe - Caramel",
+"d": "",
+"p": 125
+},
+{
+"n": "Frappe - Dark",
+"d": "",
+"p": 125
+},
+{
+"n": "Frappe - Cookies",
+"d": "",
+"p": 125
+},
+{
+"n": "Frappe - Snickers",
+"d": "",
+"p": 125
+},
+{
+"n": "Frappe - Salted Caramel",
+"d": "",
+"p": 125
+},
+{
+"n": "Frappe Tiramisu",
+"d": "",
+"p": 140
+}
+]
+},
+{
+"name": "Ice Drink",
+"items": [
+{
+"n": "Iced Chocolate",
+"d": "",
+"p": 100
+},
+{
+"n": "Iced Salted Caramel Latte",
+"d": "",
+"p": 105
+},
+{
+"n": "Iced Latte",
+"d": "",
+"p": 99
+},
+{
+"n": "Iced Caramel Macchiato",
+"d": "",
+"p": 108
+},
+{
+"n": "Iced Matcha",
+"d": "",
+"p": 115
+},
+{
+"n": "Iced Spanish Latte",
+"d": "",
+"p": 113
+},
+{
+"n": "Iced Cappuccino",
+"d": "",
+"p": 109
+},
+{
+"n": "Iced Americano",
+"d": "",
+"p": 98
+},
+{
+"n": "Iced Mocha",
+"d": "",
+"p": 108
+},
+{
+"n": "Iced Matcha Strawberry",
+"d": "",
+"p": 129
+},
+{
+"n": "Iced Matcha Pistachio",
+"d": "",
+"p": 135
+},
+{
+"n": "Iced Matcha Coconut",
+"d": "",
+"p": 125
+},
+{
+"n": "Butter Scotch",
+"d": "",
+"p": 112
+},
+{
+"n": "Ice Hibiscus",
+"d": "",
+"p": 82
+},
+{
+"n": "Ice Hibiscus Flavour",
+"d": "",
+"p": 97
+},
+{
+"n": "Iced Tea Classic",
+"d": "",
+"p": 105
+},
+{
+"n": "Iced Tea Passion",
+"d": "",
+"p": 110
+},
+{
+"n": "Iced Tea Peach",
+"d": "",
+"p": 110
+}
+]
+},
+{
+"name": "Fresh Juice",
+"items": [
+{
+"n": "Strawberry",
+"d": "",
+"p": 105
+},
+{
+"n": "Mango",
+"d": "",
+"p": 105
+},
+{
+"n": "Orange",
+"d": "",
+"p": 105
+},
+{
+"n": "Banana",
+"d": "",
+"p": 105
+},
+{
+"n": "Kiwi Mango",
+"d": "",
+"p": 130
+},
+{
+"n": "Watermelon",
+"d": "",
+"p": 105
+},
+{
+"n": "Lemon Mint",
+"d": "",
+"p": 95
+},
+{
+"n": "Avocado",
+"d": "",
+"p": 150
+}
+]
+},
+{
+"name": "Smoothie",
+"items": [
+{
+"n": "Smoothie - Mango",
+"d": "",
+"p": 115
+},
+{
+"n": "Smoothie - Strawberry",
+"d": "",
+"p": 115
+},
+{
+"n": "Smoothie - Blueberry",
+"d": "",
+"p": 115
+},
+{
+"n": "Smoothie - Peach",
+"d": "",
+"p": 115
+},
+{
+"n": "Smoothie - Lemon",
+"d": "",
+"p": 115
+},
+{
+"n": "Smoothie - Mint Lemon",
+"d": "",
+"p": 115
+},
+{
+"n": "Smoothie - Passion",
+"d": "",
+"p": 115
+},
+{
+"n": "Smoothie - Watermelon",
+"d": "",
+"p": 115
+},
+{
+"n": "Smoothie - Pineapple",
+"d": "",
+"p": 115
+},
+{
+"n": "Smoothie - Mix Berry",
+"d": "",
+"p": 115
+},
+{
+"n": "Smoothie - Raspberry",
+"d": "",
+"p": 115
+}
+]
+},
+{
+"name": "Milk Shake",
+"items": [
+{
+"n": "Milk Shake - Peach",
+"d": "",
+"p": 123
+},
+{
+"n": "Milk Shake - Oreo",
+"d": "",
+"p": 123
+},
+{
+"n": "Milk Shake - Lotus",
+"d": "",
+"p": 123
+},
+{
+"n": "Milk Shake - Kinder",
+"d": "",
+"p": 123
+},
+{
+"n": "Milk Shake - Mocha",
+"d": "",
+"p": 123
+},
+{
+"n": "Milk Shake - Nescafe Caramel",
+"d": "",
+"p": 123
+},
+{
+"n": "Milk Shake - Chocolate",
+"d": "",
+"p": 123
+},
+{
+"n": "Milk Shake - Blueberry",
+"d": "",
+"p": 123
+},
+{
+"n": "Milk Shake - Nutella",
+"d": "",
+"p": 123
+},
+{
+"n": "Milk Shake - Vanilla",
+"d": "",
+"p": 123
+},
+{
+"n": "Milk Shake - Caramel",
+"d": "",
+"p": 123
+},
+{
+"n": "Milk Shake - Raspberry",
+"d": "",
+"p": 123
+},
+{
+"n": "Milk Shake - Mixberry",
+"d": "",
+"p": 123
+},
+{
+"n": "Milk Shake - Strawberry",
+"d": "",
+"p": 123
+},
+{
+"n": "Milk Shake - Passion",
+"d": "",
+"p": 123
+},
+{
+"n": "Milk Shake - Mango",
+"d": "",
+"p": 123
+}
+]
+},
+{
+"name": "Redbull Mojito",
+"items": [
+{
+"n": "Redbull Mojito",
+"d": "Choose your favourite flavour (write it in the notes)",
+"p": 130
+}
+]
+},
+{
+"name": "Mojito",
+"items": [
+{
+"n": "Mojito - Iceberry",
+"d": "",
+"p": 100
+},
+{
+"n": "Mojito - Blue Passion",
+"d": "",
+"p": 100
+},
+{
+"n": "Mojito - Sky Blue",
+"d": "",
+"p": 100
+},
+{
+"n": "Mojito - Strawberry Pina Colada",
+"d": "",
+"p": 100
+},
+{
+"n": "Mojito - Kiwi Lemon Mint",
+"d": "",
+"p": 100
+},
+{
+"n": "Mojito - Apple Honey",
+"d": "",
+"p": 100
+},
+{
+"n": "Mojito - Red Honey Lemon",
+"d": "",
+"p": 100
+},
+{
+"n": "Mojito - Lemon Honey",
+"d": "",
+"p": 100
+},
+{
+"n": "Mojito - Black Orange",
+"d": "",
+"p": 100
+},
+{
+"n": "Mojito - Coconut Minty",
+"d": "",
+"p": 100
+}
+]
+},
+{
+"name": "Breakfast",
+"items": [
+{
+"n": "Plain Croissant",
+"d": "",
+"p": 85
+},
+{
+"n": "Zaatar Cheese Croissant",
+"d": "",
+"p": 108
+},
+{
+"n": "Cheese Olives Croissant",
+"d": "",
+"p": 113
+},
+{
+"n": "Mix Cheese Croissant",
+"d": "",
+"p": 123
+},
+{
+"n": "Smoked Croissant",
+"d": "",
+"p": 135
+},
+{
+"n": "Nutella Croissant",
+"d": "",
+"p": 115
+},
+{
+"n": "Pistachio Croissant",
+"d": "",
+"p": 118
+},
+{
+"n": "Pain Suisse",
+"d": "",
+"p": 98
+},
+{
+"n": "Pain Suisse Chocolate",
+"d": "",
+"p": 108
+},
+{
+"n": "Strawberry Croissant",
+"d": "",
+"p": 108
+},
+{
+"n": "Almond Croissant",
+"d": "",
+"p": 118
+},
+{
+"n": "Toast Mix Cheese",
+"d": "",
+"p": 109
+}
+]
+},
+{
+"name": "Sandwich",
+"items": [
+{
+"n": "Mix Cheese Sandwich",
+"d": "",
+"p": 110
+},
+{
+"n": "Smoked Sandwich",
+"d": "",
+"p": 125
+},
+{
+"n": "Club Sandwich",
+"d": "",
+"p": 118
+},
+{
+"n": "Toast Omelet Cheese",
+"d": "",
+"p": 110
+},
+{
+"n": "Brioche Hot Dog",
+"d": "",
+"p": 124
+},
+{
+"n": "Brioche Turkey Cheese",
+"d": "",
+"p": 124
+},
+{
+"n": "BBQ Sandwich",
+"d": "",
+"p": 110
+},
+{
+"n": "Tandoori Sandwich",
+"d": "",
+"p": 110
+},
+{
+"n": "Tuna Sandwich",
+"d": "",
+"p": 140
+},
+{
+"n": "Focaccia Cheese",
+"d": "",
+"p": 120
+}
+]
+},
+{
+"name": "Begel",
+"items": [
+{
+"n": "Smoked Begel",
+"d": "",
+"p": 120
+},
+{
+"n": "Mix Cheese Begel",
+"d": "",
+"p": 115
+},
+{
+"n": "Omelet Begel",
+"d": "",
+"p": 99
+},
+{
+"n": "Turkey Begel",
+"d": "",
+"p": 115
+},
+{
+"n": "Tuna Brown Begel",
+"d": "",
+"p": 140
+}
+]
+},
+{
+"name": "Salad",
+"items": [
+{
+"n": "Caesar Salad",
+"d": "",
+"p": 130
+},
+{
+"n": "Classic Salad",
+"d": "",
+"p": 95
+},
+{
+"n": "Halloumi Salad",
+"d": "",
+"p": 120
+},
+{
+"n": "Greek Salad",
+"d": "",
+"p": 110
+},
+{
+"n": "Healthy Salad",
+"d": "",
+"p": 125
+}
+]
+},
+{
+"name": "Boba",
+"items": [
+{
+"n": "Salted Caramel Boba",
+"d": "",
+"p": 120
+},
+{
+"n": "Strawberry Boba",
+"d": "",
+"p": 110
+},
+{
+"n": "Blue Boba",
+"d": "",
+"p": 120
+},
+{
+"n": "Chocolate Beans Boba",
+"d": "",
+"p": 130
+},
+{
+"n": "Boba Coffee",
+"d": "",
+"p": 120
+},
+{
+"n": "Boba Tea",
+"d": "",
+"p": 110
+},
+{
+"n": "Brown Sugar Boba",
+"d": "",
+"p": 120
+},
+{
+"n": "Skinny Hawaii",
+"d": "",
+"p": 120
+},
+{
+"n": "Blue Sea",
+"d": "",
+"p": 120
+},
+{
+"n": "Cotton Candy",
+"d": "",
+"p": 120
+}
+]
+},
+{
+"name": "Mini Pancake",
+"items": [
+{
+"n": "Classic Pancake",
+"d": "Choose your favourite sauce (write it in the notes)",
+"p": 89
+}
+]
+},
+{
+"name": "Waffle",
+"items": [
+{
+"n": "Classic Waffle",
+"d": "Choose your favourite sauce (write it in the notes)",
+"p": 89
+}
+]
+}
+]
+};
+var CONFIG={
+  name:"Cafe & Bakery",
+  tagline:"Order from your table",
+  whatsapp:"201013585550",   // cafe WhatsApp number, international format, no + or leading 0
+  currency:"LE",
+  categories:[]
+};
+</script>
+<div id="picker"><header><h1>Cafe &amp; Bakery</h1><p>Choose your branch to see the menu and order</p></header><main class="pk" id="pk"></main></div>
+<div id="menuview"><header><h1 id="nm"></h1><p id="tg"></p><span id="tbl"></span><a href="#" style="display:block;margin-top:8px;color:#fff;font-size:13px;opacity:.9">Change branch</a></header>
+<nav id="nav"></nav>
+<main id="list"></main>
+<footer>Prices in Egyptian pounds (LE)</footer>
+</div>
+<div id="bar"><button id="open"></button></div>
+<div id="sheet"><div class="box">
+  <h2>Your order</h2><div id="lines"></div><div class="tot" id="tot"></div>
+  <input id="who" placeholder="Name (optional)">
+  <input id="tn" placeholder="Table number" inputmode="numeric">
+  <textarea id="note" rows="2" placeholder="Notes (extra sugar, no ice...)"></textarea>
+  <button class="go" id="send">Send order on WhatsApp</button>
+  <button class="x" id="close">Back to menu</button>
+</div></div>
+<script>
+var $=function(i){return document.getElementById(i)};
+var cart={},cur=0,q=new URLSearchParams(location.search);
+$("tg").textContent=CONFIG.tagline;
+var table=q.get("table")||q.get("t")||"";
+if(table){$("tbl").textContent="Table "+table;$("tn").value=table}else $("tbl").style.display="none";
+function key(c,i){return c+"-"+i}
+function drawNav(){$("nav").innerHTML="";CONFIG.categories.forEach(function(c,i){var b=document.createElement("button");b.textContent=c.name;b.className=i==cur?"on":"";b.onclick=function(){cur=i;drawNav();drawList();window.scrollTo(0,0)};$("nav").appendChild(b)});var on=$("nav").querySelector(".on");if(on&&on.scrollIntoView)on.scrollIntoView({inline:"center",block:"nearest"})}
+function drawList(){var l=$("list");l.innerHTML="";CONFIG.categories[cur].items.forEach(function(it,i){var k=key(cur,i),n=cart[k]||0;var d=document.createElement("div");d.className="item";
+d.innerHTML='<div class="i"><b></b><small></small><div class="price"></div></div><div class="qty"></div>';
+d.querySelector("b").textContent=it.n;d.querySelector("small").textContent=it.d;d.querySelector(".price").textContent=it.p+" "+CONFIG.currency;
+var qd=d.querySelector(".qty");
+if(n>0){var m=document.createElement("button");m.className="m";m.textContent="−";m.onclick=function(){chg(k,-1)};var s=document.createElement("span");s.textContent=n;qd.appendChild(m);qd.appendChild(s)}
+var p=document.createElement("button");p.textContent="+";p.onclick=function(){chg(k,1)};qd.appendChild(p);l.appendChild(d)})}
+function chg(k,d){cart[k]=Math.max(0,(cart[k]||0)+d);if(!cart[k])delete cart[k];drawList();bar()}
+function lines(){var o=[],t=0;Object.keys(cart).forEach(function(k){var a=k.split("-"),it=CONFIG.categories[a[0]].items[a[1]];o.push({n:it.n,q:cart[k],s:it.p*cart[k]});t+=it.p*cart[k]});return{o:o,t:t}}
+function bar(){var L=lines(),c=L.o.reduce(function(a,x){return a+x.q},0);$("bar").style.display=c?"block":"none";$("open").textContent="Review order ("+c+") - "+L.t+" "+CONFIG.currency}
+$("open").onclick=function(){var L=lines();$("lines").innerHTML="";L.o.forEach(function(x){var r=document.createElement("div");r.className="row";r.innerHTML="<span></span><span></span>";r.children[0].textContent=x.q+" × "+x.n;r.children[1].textContent=x.s+" "+CONFIG.currency;$("lines").appendChild(r)});$("tot").textContent="Total: "+L.t+" "+CONFIG.currency;$("sheet").style.display="flex"};
+$("close").onclick=function(){$("sheet").style.display="none"};
+$("send").onclick=function(){var L=lines();if(!L.o.length)return;var m="New order - "+CONFIG.name+" - "+CONFIG.branch+"\n";var tn=$("tn").value.trim(),w=$("who").value.trim(),nt=$("note").value.trim();
+if(tn)m+="Table: "+tn+"\n";if(w)m+="Name: "+w+"\n";m+="\n";L.o.forEach(function(x){m+=x.q+" × "+x.n+" = "+x.s+" "+CONFIG.currency+"\n"});m+="\nTotal: "+L.t+" "+CONFIG.currency;if(nt)m+="\nNotes: "+nt;
+location.href="https://wa.me/"+CONFIG.whatsapp+"?text="+encodeURIComponent(m)};
+BRANCHES.forEach(function(b){var a=document.createElement("a");a.href="#"+b.id;a.innerHTML="<b></b><span>&rsaquo;</span>";a.firstChild.textContent=b.name;$("pk").appendChild(a)});
+var curBranch=null;
+function route(){var id=location.hash.replace("#",""),b=null;BRANCHES.forEach(function(x){if(x.id==id)b=x});
+if(!b){curBranch=null;$("picker").style.display="block";$("menuview").style.display="none";$("bar").style.display="none";$("sheet").style.display="none";document.title="Choose a branch";window.scrollTo(0,0);return}
+if(curBranch!==b.id){curBranch=b.id;cart={};cur=0;CONFIG.categories=MENUS[b.menu];CONFIG.branch=b.name;$("nm").textContent=CONFIG.name+" - "+b.name;document.title=CONFIG.name+" - "+b.name;drawNav();drawList();bar();window.scrollTo(0,0)}
+$("picker").style.display="none";$("menuview").style.display="block";$("sheet").style.display="none";bar()}
+window.addEventListener("hashchange",route);route();
+</script>
+</body>
+</html>
