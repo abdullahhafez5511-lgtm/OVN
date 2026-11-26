@@ -62,6 +62,10 @@ input,textarea{background:#0b0b0b;color:#fff;border:1px solid #3a3a3a;border-rad
 .go{background:#e0261a;color:#fff;border-radius:6px}.x{background:#262626;color:#ddd;border-radius:6px}
 footer{color:#6d695f}
 #splash{background:#0b0b0b;color:#fff}
+#sbox{padding:12px 12px 0;background:#0b0b0b;max-width:640px;margin:auto}
+#sr{width:100%;margin:0;padding:12px 14px;font-size:16px;background:#151515;color:#fff;border:1px solid #333;border-radius:6px}
+.hot{display:inline-block;margin-right:8px;background:#e0261a;color:#fff;font-size:11px;font-weight:800;padding:2px 8px;border-radius:3px;vertical-align:middle}
+.empty{text-align:center;color:#9b968c;padding:40px 0}
 </style>
 </head>
 <body>
@@ -504,6 +508,7 @@ var CONFIG={
 </script>
 <div id="splash"><div class="ar">أن كات</div></div>
 <div id="menuview"><header><div class="ar">أن كات</div></header>
+<div id="sbox"><input id="sr" type="search" placeholder="ابحث في المنيو..." autocomplete="off"></div>
 <nav id="nav"></nav>
 <main id="list"></main>
 <footer>الأسعار بالجنيه المصري</footer>
@@ -521,10 +526,16 @@ var CONFIG={
 var $=function(i){return document.getElementById(i)};
 var cart={},cur=0,q=new URLSearchParams(location.search);
 function key(c,i){return c+"-"+i}
-function drawNav(){$("nav").innerHTML="";CONFIG.categories.forEach(function(c,i){var b=document.createElement("button");b.textContent=c.name;b.className=i==cur?"on":"";b.onclick=function(){cur=i;drawNav();drawList();window.scrollTo(0,0)};$("nav").appendChild(b)});var on=$("nav").querySelector(".on");if(on&&on.scrollIntoView)on.scrollIntoView({inline:"center",block:"nearest"})}
-function drawList(){var l=$("list");l.innerHTML="";CONFIG.categories[cur].items.forEach(function(it,i){var k=key(cur,i),n=cart[k]||0;var d=document.createElement("div");d.className="item";
+function drawNav(){$("nav").innerHTML="";CONFIG.categories.forEach(function(c,i){var b=document.createElement("button");b.textContent=c.name;b.className=i==cur?"on":"";b.onclick=function(){cur=i;sq="";$("sr").value="";$("nav").style.opacity="1";drawNav();drawList();window.scrollTo(0,0)};$("nav").appendChild(b)});var on=$("nav").querySelector(".on");if(on&&on.scrollIntoView)on.scrollIntoView({inline:"center",block:"nearest"})}
+var HOT={"سموك أن كات":1,"أن كات برجر - سنجل":1,"بافلو برجر - سنجل":1,"جراند أن كات":1,"ميكس جريل":1,"بوكس كبير":1};
+function norm(t){return (t||"").replace(/[\u064B-\u0652\u0640]/g,"").replace(/[أإآٱ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/ؤ/g,"و").replace(/ئ/g,"ي").toLowerCase().trim()}
+var sq="";
+function drawList(){var l=$("list");l.innerHTML="";var arr=[];
+if(sq){CONFIG.categories.forEach(function(c,ci){c.items.forEach(function(it,i){if(norm(it.n+" "+it.d+" "+c.name).indexOf(sq)>-1)arr.push({it:it,c:ci,i:i})})});if(!arr.length){var e=document.createElement("div");e.className="empty";e.textContent="مفيش نتيجة لبحثك";l.appendChild(e);return}}
+else CONFIG.categories[cur].items.forEach(function(it,i){arr.push({it:it,c:cur,i:i})});
+arr.forEach(function(a){var it=a.it,i=a.i,k=key(a.c,i),n=cart[k]||0;var d=document.createElement("div");d.className="item";
 d.innerHTML='<div class="i"><b></b><small></small><div class="price"></div></div><div class="qty"></div>';
-d.querySelector("b").textContent=it.n;var sm=d.querySelector("small");if(it.d)sm.textContent=it.d;else sm.style.display="none";d.querySelector(".price").textContent=it.p+" "+CONFIG.currency;
+d.querySelector("b").textContent=it.n;if(HOT[it.n]){var hb=document.createElement("span");hb.className="hot";hb.textContent="الأكثر طلبًا";d.querySelector("b").appendChild(hb)}var sm=d.querySelector("small");if(it.d)sm.textContent=it.d;else sm.style.display="none";d.querySelector(".price").textContent=it.p+" "+CONFIG.currency;
 var qd=d.querySelector(".qty");
 if(n>0){var m=document.createElement("button");m.className="m";m.textContent="\u2212";m.onclick=function(){chg(k,-1)};var s=document.createElement("span");s.textContent=n;qd.appendChild(m);qd.appendChild(s)}
 var p=document.createElement("button");p.textContent="+";p.onclick=function(){chg(k,1)};qd.appendChild(p);l.appendChild(d)})}
@@ -538,6 +549,7 @@ var m="طلب جديد - "+CONFIG.name+"\n",w=$("who").value.trim(),ph=$("ph").v
 if(w)m+="الاسم: "+w+"\n";if(ph)m+="الموبايل: "+ph+"\n";m+="العنوان: "+ad+"\n\n";L.o.forEach(function(x){m+=x.q+" × "+x.n+" = "+x.s+" "+CONFIG.currency+"\n"});m+="\nمجموع الطلب: "+L.t+" "+CONFIG.currency+"\nالتوصيل: "+CONFIG.delivery+" "+CONFIG.currency+"\nالإجمالي: "+(L.t+CONFIG.delivery)+" "+CONFIG.currency;if(nt)m+="\nملاحظات: "+nt;
 location.href="https://wa.me/"+CONFIG.whatsapp+"?text="+encodeURIComponent(m)};
 drawNav();drawList();bar();
+$("sr").oninput=function(){sq=norm(this.value);$("nav").style.opacity=sq?".35":"1";drawList()};
 (function(){if(location.hash)return;var sp=$("splash");sp.style.display="flex";document.body.style.overflow="hidden";
 setTimeout(function(){sp.classList.add("out");setTimeout(function(){sp.style.display="none";document.body.style.overflow=""},850)},3000)})();
 </script>
