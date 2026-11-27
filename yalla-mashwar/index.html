@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#15112e">
+<title>يلا مشوار</title>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="apple-touch-icon.png">
+<style>
+:root{--bg:#15112e;--card:#211b45;--line:#3a3166;--a:#8b5cf6;--a2:#c4a8ff;--c:#ff7a59;--t:#f6f3ff;--m:#a79fcf}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font-family:-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;padding-bottom:40px}
+.hero{padding:34px 18px 22px;background:linear-gradient(160deg,#2b2160,#15112e);border-bottom:1px solid var(--line)}
+.hero h1{margin:0;font-size:38px;font-weight:900}.hero h1 span{color:var(--c)}
+.hero p{margin:8px 0 0;color:var(--m);font-size:15px;line-height:1.6}
+.types{display:flex;gap:10px;padding:16px 14px 6px}
+.type{flex:1;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:18px 8px;text-align:center;font-size:17px;font-weight:800;cursor:pointer}
+.type .e{font-size:30px;display:block;margin-bottom:6px}
+.type.on{border-color:var(--a);background:#2c2360}
+h2{font-size:17px;margin:20px 16px 10px;color:var(--a2)}
+#form{padding:0 14px}
+#err{display:none;background:#e0261a;color:#fff;font-weight:800;text-align:center;padding:10px 12px;border-radius:10px;margin:0 0 12px}
+label{display:block;font-size:13px;color:var(--m);margin:0 4px 5px}
+input,textarea{width:100%;font:inherit;font-size:16px;background:var(--card);color:var(--t);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
+input::placeholder,textarea::placeholder{color:var(--m)}
+#ph:placeholder-shown{direction:rtl}
+.fr{display:flex;gap:8px}.fr input{flex:1}
+.loc{flex:0 0 auto;width:auto;background:#2c2360;color:var(--a2);border:1px solid var(--a);border-radius:12px;padding:0 14px;margin-bottom:12px;font:inherit;font-size:14px;font-weight:800;cursor:pointer}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:-4px 0 12px}
+.chip{background:#2c2360;color:var(--a2);border-radius:20px;padding:6px 12px;font-size:13px;cursor:pointer}
+.price{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.price button{width:52px;height:52px;border-radius:14px;border:1px solid var(--a);background:#2c2360;color:var(--a2);font-size:26px;font-weight:900;cursor:pointer}
+.price input{margin:0;text-align:center;font-size:22px;font-weight:900;flex:1}
+#go{width:100%;border:0;border-radius:14px;padding:16px;font:inherit;font-size:18px;font-weight:900;background:linear-gradient(135deg,var(--a),var(--c));color:#fff;cursor:pointer}
+.note{font-size:12px;color:var(--m);margin:10px 4px 0;line-height:1.6}
+.h{background:var(--card);border-radius:14px;padding:12px 14px;margin:0 14px 10px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.h small{display:block;color:var(--m);margin-top:3px}.h button{background:#2c2360;color:var(--a2);border:1px solid var(--a);border-radius:10px;padding:8px 12px;font:inherit;font-size:13px;font-weight:800;cursor:pointer}
+#splash{position:fixed;inset:0;z-index:100;background:linear-gradient(160deg,#2b2160,#15112e);display:flex;align-items:center;justify-content:center;transition:opacity .6s ease;opacity:1}
+#splash span{font-size:56px;font-weight:900}#splash b{color:var(--c)}
+#splash.out{opacity:0}
+</style>
+</head>
+<body>
+<div id="splash"><span>يلا <b>مشوار</b></span></div>
+<div class="hero"><h1>يلا <span>مشوار</span></h1><p>اطلب توصيل أو مشوار توكتوك، وحدد السعر اللي يناسبك. الطلب بيوصل واتساب والمندوب يرد عليك.</p></div>
+<div class="types"><div class="type on" id="t0"><span class="e">🛵</span>توصيل طلبات</div><div class="type" id="t1"><span class="e">🛺</span>توكتوك</div></div>
+<h2>بيانات الطلب</h2>
+<div id="form">
+  <div id="err"></div>
+  <label>الاسم</label><input id="who" placeholder="الاسم">
+  <label>رقم الموبايل</label><input id="ph" placeholder="رقم الموبايل" inputmode="tel" type="tel">
+  <label>من</label>
+  <div class="fr"><input id="from" placeholder="مكان الاستلام"><button class="loc" id="loc" type="button">📍 موقعي</button></div>
+  <div class="chips" id="cf"></div>
+  <label>إلى</label><input id="to" placeholder="مكان التوصيل">
+  <div class="chips" id="ct"></div>
+  <label id="dl">الطلب المطلوب توصيله</label><input id="what" placeholder="مثلًا: أكل من مطعم، شنطة، أوراق">
+  <label>السعر اللي تقترحه (ج.م)</label>
+  <div class="price"><button id="pm" type="button">−</button><input id="pr" inputmode="numeric" value="30"><button id="pp" type="button">+</button></div>
+  <label>ملاحظات</label><textarea id="note" rows="2" placeholder="اختياري"></textarea>
+  <button id="go">ابعت الطلب على واتساب</button>
+  <p class="note">الطلب بيتبعت لواتساب المندوب، والمندوب بيرد بالموافقة أو بسعر تاني. الدفع كاش بينك وبين المندوب.</p>
+</div>
+<h2 id="hh" style="display:none">طلباتي اللي فاتت</h2>
+<div id="hist"></div>
+<script>
+/* ===== عدّل هنا: الاسم، رقم الواتساب، السعر الابتدائي ===== */
+var CONFIG={name:"يلا مشوار",whatsapp:"201013585550",startPrice:30,step:5,types:["توصيل طلبات","توكتوك"]};
+/* ======================================================== */
+var $=function(i){return document.getElementById(i)},ty=0,S={};
+try{S=JSON.parse(localStorage.getItem("ym")||"{}")}catch(e){}
+S.places=S.places||[];S.hist=S.hist||[];
+function save(){try{localStorage.setItem("ym",JSON.stringify(S))}catch(e){}}
+document.title=CONFIG.name;$("pr").value=CONFIG.startPrice;
+if(S.who)$("who").value=S.who;if(S.ph)$("ph").value=S.ph;
+function setType(i){ty=i;$("t0").className="type"+(i==0?" on":"");$("t1").className="type"+(i==1?" on":"");$("what").style.display=$("dl").style.display=i==0?"block":"none"}
+$("t0").onclick=function(){setType(0)};$("t1").onclick=function(){setType(1)};setType(0);
+$("pp").onclick=function(){$("pr").value=(+$("pr").value||0)+CONFIG.step};
+$("pm").onclick=function(){$("pr").value=Math.max(0,(+$("pr").value||0)-CONFIG.step)};
+function chips(id,inp){var c=$(id);c.innerHTML="";S.places.slice(0,5).forEach(function(p){var d=document.createElement("span");d.className="chip";d.textContent=p;d.onclick=function(){$(inp).value=p};c.appendChild(d)})}
+function hist(){var h=$("hist");h.innerHTML="";$("hh").style.display=S.hist.length?"block":"none";S.hist.slice(0,8).forEach(function(r){var d=document.createElement("div");d.className="h";d.innerHTML="<div><b></b><small></small></div><button>اطلب تاني</button>";d.querySelector("b").textContent=CONFIG.types[r.ty]+" - "+r.price+" ج.م";d.querySelector("small").textContent=r.from+" ← "+r.to;d.querySelector("button").onclick=function(){setType(r.ty);$("from").value=r.from;$("to").value=r.to;$("pr").value=r.price;$("what").value=r.what||"";window.scrollTo(0,0)};h.appendChild(d)})}
+chips("cf","from");chips("ct","to");hist();
+$("loc").onclick=function(){if(!navigator.geolocation)return;$("loc").textContent="...";navigator.geolocation.getCurrentPosition(function(p){$("from").value="موقعي: https://maps.google.com/?q="+p.coords.latitude.toFixed(6)+","+p.coords.longitude.toFixed(6);$("loc").textContent="📍 موقعي"},function(){$("loc").textContent="📍 موقعي"},{enableHighAccuracy:true,timeout:10000})};
+function err(t,el){$("err").textContent=t;$("err").style.display="block";if(el){el.style.borderColor="#e0261a";el.focus()}$("err").scrollIntoView({block:"center"})}
+["who","ph","from","to","pr"].forEach(function(i){$(i).addEventListener("input",function(){$("err").style.display="none"})});
+$("go").onclick=function(){$("err").style.display="none";
+var w=$("who").value.trim();if(!w){err("من فضلك ادخل اسمك",$("who"));return}
+var ph=$("ph").value.trim();if(!ph){err("من فضلك ادخل رقم الموبايل",$("ph"));return}
+var fr=$("from").value.trim();if(!fr){err("من فضلك ادخل مكان الاستلام",$("from"));return}
+var to=$("to").value.trim();if(!to){err("من فضلك ادخل مكان التوصيل",$("to"));return}
+var pr=+$("pr").value;if(!pr){err("من فضلك ادخل السعر",$("pr"));return}
+var wh=ty==0?$("what").value.trim():"",nt=$("note").value.trim();
+S.who=w;S.ph=ph;[fr,to].forEach(function(p){if(p.indexOf("http")<0){S.places=[p].concat(S.places.filter(function(x){return x!=p}))}});
+S.hist.unshift({ty:ty,from:fr,to:to,price:pr,what:wh});S.hist=S.hist.slice(0,10);save();
+var m="طلب جديد - "+CONFIG.name+"\nالنوع: "+CONFIG.types[ty]+"\nالاسم: "+w+"\nالموبايل: "+ph+"\nمن: "+fr+"\nإلى: "+to;if(wh)m+="\nالطلب: "+wh;m+="\nالسعر المقترح: "+pr+" ج.م";if(nt)m+="\nملاحظات: "+nt;
+location.href="https://wa.me/"+CONFIG.whatsapp+"?text="+encodeURIComponent(m)};
+setTimeout(function(){$("splash").classList.add("out");setTimeout(function(){$("splash").style.display="none"},650)},2500);
+</script>
+</body>
+</html>
