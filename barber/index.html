@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0b0c">
+<title>كلاسيك للحلاقة الرجالي</title>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="apple-touch-icon.png">
+<style>
+:root{--bg:#0b0b0c;--card:#17171a;--g:#d4af37;--g2:#f0d77a;--t:#f4f1ea;--m:#9b968c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font-family:-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;padding-bottom:30px}
+header{text-align:center;padding:26px 16px 16px;border-bottom:2px solid var(--g)}
+header h1{margin:0;font-size:30px;font-weight:900;color:var(--g)}
+h2{font-size:18px;margin:22px 16px 10px;color:var(--g2)}
+#list{padding:0 12px}
+.svc{display:flex;justify-content:space-between;align-items:center;background:var(--card);border:2px solid transparent;border-radius:14px;padding:16px;margin-bottom:10px;cursor:pointer}
+.svc b{font-size:17px}.svc .p{color:var(--g);font-weight:900;font-size:17px}
+.svc.on{border-color:var(--g)}
+#form{padding:0 12px}
+#err{display:none;background:#e0261a;color:#fff;font-weight:800;text-align:center;padding:10px 12px;border-radius:10px;margin:0 0 12px}
+input,select,textarea{width:100%;font:inherit;font-size:16px;background:var(--card);color:var(--t);border:1px solid #333;border-radius:12px;padding:14px;margin-bottom:10px}
+input::placeholder,textarea::placeholder{color:var(--m)}
+#ph:placeholder-shown{direction:rtl}
+select{appearance:none;-webkit-appearance:none}
+.row2 select{display:block}
+#go{width:100%;border:0;border-radius:14px;padding:16px;font:inherit;font-size:18px;font-weight:900;background:linear-gradient(var(--g2),var(--g));color:#111;cursor:pointer}
+#splash{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;transition:opacity .6s ease;opacity:1}
+#splash span{font-size:44px;font-weight:900;color:var(--g);line-height:1.3}
+#splash.out{opacity:0}
+</style>
+</head>
+<body>
+<div id="splash"><span id="sn"></span></div>
+<header><h1 id="nm"></h1></header>
+<h2>الخدمات</h2>
+<div id="list"></div>
+<h2>احجز</h2>
+<div id="form">
+  <div id="err"></div>
+  <input id="who" placeholder="الاسم">
+  <input id="ph" placeholder="رقم الموبايل" inputmode="tel" type="tel">
+  <div class="row2"><select id="day"></select><select id="tm"></select></div>
+  <textarea id="note" rows="2" placeholder="ملاحظات (اختياري)"></textarea>
+  <button id="go">احجز</button>
+</div>
+<script>
+/* ===== عدّل هنا: الاسم، الرقم، الخدمات والأسعار، المواعيد ===== */
+var CONFIG={
+  name:"كلاسيك للحلاقة الرجالي",
+  whatsapp:"201013585550",
+  currency:"ج.م",
+  services:[
+    {n:"حلاقة شعر",p:100},
+    {n:"حلاقة دقن",p:60},
+    {n:"حلاقة شعر + دقن",p:150},
+    {n:"حلاقة أطفال",p:80},
+    {n:"تنظيف بشرة",p:120}
+  ],
+  times:["12:00 ظهرًا","1:00 ظهرًا","2:00 ظهرًا","3:00 عصرًا","4:00 عصرًا","5:00 مساءً","6:00 مساءً","7:00 مساءً","8:00 مساءً","9:00 مساءً","10:00 مساءً"],
+  daysAhead:7
+};
+/* ============================================================ */
+var $=function(i){return document.getElementById(i)},sel=-1;
+document.title=CONFIG.name;$("nm").textContent=CONFIG.name;$("sn").textContent=CONFIG.name;
+CONFIG.services.forEach(function(s,i){var d=document.createElement("div");d.className="svc";d.innerHTML="<b></b><span class=p></span>";d.children[0].textContent=s.n;d.children[1].textContent=s.p+" "+CONFIG.currency;d.onclick=function(){sel=i;[].forEach.call($("list").children,function(c,j){c.className="svc"+(j==i?" on":"")});$("err").style.display="none"};$("list").appendChild(d)});
+for(var i=0;i<CONFIG.daysAhead;i++){var dt=new Date();dt.setDate(dt.getDate()+i);var o=document.createElement("option");o.textContent=(i==0?"النهاردة - ":i==1?"بكرة - ":"")+dt.toLocaleDateString("ar-EG",{weekday:"long",day:"numeric",month:"long"});$("day").appendChild(o)}
+CONFIG.times.forEach(function(t){var o=document.createElement("option");o.textContent=t;$("tm").appendChild(o)});
+function err(t,el){$("err").textContent=t;$("err").style.display="block";if(el){el.style.borderColor="#e0261a";el.focus()}$("err").scrollIntoView({block:"center"})}
+["who","ph"].forEach(function(i){$(i).addEventListener("input",function(){$("err").style.display="none"})});
+$("go").onclick=function(){$("err").style.display="none";
+if(sel<0){err("من فضلك اختار الخدمة");return}
+var w=$("who").value.trim();if(!w){err("من فضلك ادخل اسمك",$("who"));return}
+var ph=$("ph").value.trim();if(!ph){err("من فضلك ادخل رقم الموبايل",$("ph"));return}
+var s=CONFIG.services[sel],nt=$("note").value.trim();
+var m="حجز جديد - "+CONFIG.name+"\nالخدمة: "+s.n+" ("+s.p+" "+CONFIG.currency+")\nالاسم: "+w+"\nالموبايل: "+ph+"\nاليوم: "+$("day").value+"\nالساعة: "+$("tm").value;if(nt)m+="\nملاحظات: "+nt;
+location.href="https://wa.me/"+CONFIG.whatsapp+"?text="+encodeURIComponent(m)};
+setTimeout(function(){$("splash").classList.add("out");setTimeout(function(){$("splash").style.display="none"},650)},2500);
+</script>
+</body>
+</html>
